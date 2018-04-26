@@ -2,9 +2,9 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 
 class HomeController extends Controller
@@ -22,20 +22,9 @@ class HomeController extends Controller
     }
 
     //登录认证
-    public function check(Request $request)
+    public function check(LoginRequest $req)
     {
-        $res = $request -> all();
-        $username = $res['username'];
-        $password = md5($res['password']);
-        $pass =DB::table('user') -> where('username',$username) -> first();
-        $username1 = $pass -> username;
-        $password1 = $pass -> password;
-        if ($username1 == $username && $password1 == $password){
-            $request -> session() -> put(['username' => $username ,'password' => $password ]);
-            return response() -> json(['status' => 0 , 'message' => '登录成功']);
-        }else{
-            return response() -> json(['status' => 1 , 'message' => '用户名或密码错误']);
-        }
+
     }
 
     //退出登录
