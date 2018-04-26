@@ -22,7 +22,7 @@
 
 <body>
 <div class="x-body">
-    <form class="layui-form" id="from" name="from">
+    <form class="layui-form" id="content" name="content">
         <div class="layui-form-item">
             <label for="username" class="layui-form-label">
                 <span class="x-red">*</span>登录名
@@ -114,13 +114,13 @@
                 $.ajax({
                     type:'POST',
                     url:'{{url('home/add_user')}}',
-                    data:$('#from').serialize(),
+                    data:$('#content').serialize(),
                     dataType:'json',
                     success:function (response) {
                         if(response.status == 0){
                             layui.msg(response.message);
                         }else{
-                            layui,msg(response.message);
+                            layui.msg(response.message);
                         }
                     }
                 })
