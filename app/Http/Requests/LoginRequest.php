@@ -16,20 +16,16 @@ class LoginRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+    //创建验证规则
     public function rules()
     {
         return [
-            //创建验证规则
             'username' => 'required',
             'password' => 'required'
         ];
     }
 
+    //创建中文提示
     public function messages()
     {
         return [
