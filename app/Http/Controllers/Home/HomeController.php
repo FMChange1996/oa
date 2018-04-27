@@ -135,7 +135,7 @@ class HomeController extends Controller
             'role.required' => '请选择用户角色',
             'status.required' => '请选择用户状态'
         ];
-
+        //验证用户输入
         $validate = Validator::make($data, [
             'username' => 'required',
             'password' => 'required|min:6',
