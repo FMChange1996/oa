@@ -21,16 +21,8 @@
     <div class="message">后台管理系统</div>
     <div id="darkbannerwrap"></div>
 
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <form method="post" class="layui-form" >
+
+    <form method="post" class="layui-form"  name="from" id="from">
         <input name="username" placeholder="用户名"  type="text"  class="layui-input" id="username" >
         <hr class="hr15">
         <input name="password"  placeholder="密码"  type="password" class="layui-input" id="password" >
@@ -50,10 +42,7 @@
             $.ajax({
                 type:'POST',
                 url:'{{url('home/check')}}',
-                data:{
-                    username:$('#username').val(),
-                    password:$('#password').val(),
-                },
+                data:$('#from').serialize(),
                 dataType:'json',
                 success:function (response) {
                     if (response.status == 0){
@@ -62,9 +51,6 @@
                     } else {
                         layer.msg(response.message,{icon:5,time:2000});
                     }
-                },
-                error:function (err) {
-                    layui.msg(err.message)
                 }
             })
         })

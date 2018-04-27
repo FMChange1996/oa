@@ -28,7 +28,7 @@
                 <span class="x-red">*</span>登录名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" required="" lay-verify="required"
+                <input type="text" id="username" name="username"
                        autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid layui-word-aux">
@@ -40,7 +40,7 @@
                 <span class="x-red">*</span>密码
             </label>
             <div class="layui-input-inline">
-                <input type="password" id="password" name="password" required="" lay-verify="pass"
+                <input type="password" id="password" name="password"
                        autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid layui-word-aux">
@@ -52,7 +52,7 @@
                 <span class="x-red">*</span>确认密码
             </label>
             <div class="layui-input-inline">
-                <input type="password" id="repassword" name="repassword" required="" lay-verify="repass"
+                <input type="password" id="repassword" name="repassword"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -61,7 +61,7 @@
                 <span class="x-red">*</span>手机
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="mobile" name="mobile" required="" lay-verify="phone"
+                <input type="text" id="mobile" name="mobile"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -70,14 +70,14 @@
                 <span class="x-red">*</span>邮箱
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="mail" name="mail" required="" lay-verify="email"
+                <input type="text" id="mail" name="mail"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="x-red">*</span>角色</label>
             <div class="layui-input-inline">
-                <select name="role" lay-verify="">
+                <select name="role" >
                     <option value="">请选择角色</option>
                     <option value="0">超级管理员</option>
                     <option value="1">管理员</option>
@@ -87,7 +87,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="x-red">*</span>状态</label>
             <div class="layui-input-inline">
-                <select name="status" lay-verify="">
+                <select name="status" >
                     <option value="">请选择状态</option>
                     <option value="0">启用</option>
                     <option value="1">停用</option>
@@ -118,9 +118,9 @@
                     dataType:'json',
                     success:function (response) {
                         if(response.status == 0){
-                            layui.msg(response.message);
+                            layui.msg(response.message,{icon:6,time:3000});
                         }else{
-                            layui.msg(response.message);
+                            layui.msg(response.message,{icon:5,time:3000});
                         }
                     }
                 })

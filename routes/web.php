@@ -36,5 +36,5 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('home/admin_rule','HomeController@admin_rule');
     Route::get('home/admin_edit','HomeController@admin_edit');
     Route::get('home/admin_add','HomeController@admin_add');
-    Route::post('home/add_user','HomeController@add_user');
+    Route::get('home/add_user','HomeController@add_user');
 });
