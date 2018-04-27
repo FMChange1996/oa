@@ -146,11 +146,12 @@ class HomeController extends Controller
             'status' => 'required'
         ], $messages);
 
+        //判断验证
         if ($validate->fails()) {
             return response()->json(['status' => 1, 'message' => $validate->errors()->first()]);
         } else {
+            //判断数据库中是否存在该用户
             $res = UsersModel::where('username', $data['username'])->first();
-
             if ($res == null) {
                 $respone = UsersModel::insert([
                     'username' => $data['username'],
