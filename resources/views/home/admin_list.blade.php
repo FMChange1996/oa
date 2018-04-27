@@ -61,11 +61,12 @@
             <th>操作</th>
         </thead>
         <tbody>
+        @foreach($table as $table)
         <tr>
             <td>
                 <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            @foreach($table as $table)
+
             <td>{{$table -> id}}</td>
             <td>{{$table -> username}}</td>
             <td>{{$table -> mobile}}</td>
@@ -75,8 +76,8 @@
             @else
                 <td>管理员</td>
             @endif
-            <td>{{$table -> create_time}}</td>
-            @endforeach
+            <td>{{date("Y/m/d H:i:s",$table -> create_time)}}</td>
+
             <td class="td-status">
                 @if($table -> status == 1)
                     <span class="layui-btn layui-btn-mini">已启用</span>
@@ -96,6 +97,7 @@
                 </a>
             </td>
         </tr>
+        @endforeach
         </tbody>
     </table>
 

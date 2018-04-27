@@ -98,9 +98,7 @@
             <label for="L_repass" class="layui-form-label">
             </label>
             <input type="hidden" name="create_time"  value="{{time()}}">
-            <button  class="layui-btn" lay-filter="add" lay-submit="" id="submit">
-                增加
-            </button>
+            <input type="button" class="layui-btn" id="submit" value="增加">
         </div>
     </form>
 </div>
@@ -118,9 +116,9 @@
                     dataType:'json',
                     success:function (response) {
                         if(response.status == 0){
-                            layui.msg(response.message,{icon:6,time:3000});
+                            layer.msg(response.message, {icon: 6, time: 3000});
                         }else{
-                            layui.msg(response.message,{icon:5,time:3000});
+                            layer.msg(response.message, {icon: 5, time: 3000});
                         }
                     }
                 })

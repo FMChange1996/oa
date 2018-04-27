@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Middleware\HomeLogin;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +18,8 @@ Route::get('/', function () {
 Route::group(['namespace' => 'Home'],function (){
     Route::get('home','HomeController@home');
     Route::post('home/check','HomeController@check');
+    Route::get('home/add_user', 'HomeController@add_user');
+
 });
 
 Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
@@ -36,5 +36,5 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('home/admin_rule','HomeController@admin_rule');
     Route::get('home/admin_edit','HomeController@admin_edit');
     Route::get('home/admin_add','HomeController@admin_add');
-    Route::get('home/add_user','HomeController@add_user');
+    Route::post('home/add_user', 'HomeController@add_user');
 });
