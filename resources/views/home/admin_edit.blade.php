@@ -22,49 +22,14 @@
 
 <body>
 <div class="x-body">
-    <form class="layui-form">
+    <form class="layui-form" name="from" id="from">
         <div class="layui-form-item">
             <label for="username" class="layui-form-label">
                 <span class="x-red">*</span>登录名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" required="" lay-verify="required"
-                       autocomplete="off" value="admin" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">*</span>将会成为您唯一的登入名
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="phone" class="layui-form-label">
-                <span class="x-red">*</span>手机
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" value="18925139194" id="phone" name="phone" required="" lay-verify="phone"
-                       autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">*</span>将会成为您唯一的登入名
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="L_email" class="layui-form-label">
-                <span class="x-red">*</span>邮箱
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" value="113664000@qq.com" id="L_email" name="email" required="" lay-verify="email"
-                       autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                <span class="x-red">*</span>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label"><span class="x-red">*</span>角色</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="">
-                <input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">
-                <input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" >
+                <input type="text" id="username" name="username"
+                       autocomplete="off" value="{{ $table -> username }}" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
@@ -72,7 +37,7 @@
                 <span class="x-red">*</span>密码
             </label>
             <div class="layui-input-inline">
-                <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
+                <input type="password" id="password" name="password"
                        autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid layui-word-aux">
@@ -80,24 +45,63 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="L_repass" class="layui-form-label">
-                <span class="x-red">*</span>确认密码
+            <label for="phone" class="layui-form-label">
+                <span class="x-red">*</span>手机
             </label>
             <div class="layui-input-inline">
-                <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
+                <input type="text" value="{{$table -> mobile}}" id="mobile" name="mobile"
                        autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                <span class="x-red">*</span>邮箱
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" value="{{$table -> mail}}" id="email" name="mail"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="x-red">*</span>角色</label>
+            <div class="layui-input-inline">
+                <select name="role">
+                    <option value=""></option>
+                    <option value="0">超级管理员</option>
+                    <option value="1">管理员</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label for="L_repass" class="layui-form-label">
             </label>
-            <button  class="layui-btn" lay-filter="add" lay-submit="">
-                增加
-            </button>
+            <input class="layui-btn" value="保存" id="sumbit" name="submit">
         </div>
     </form>
 </div>
 <script>
+    $(function () {
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+        });
+        $('#submit').on('click', function (event) {
+            $.ajax({
+                type: 'POST',
+                url: '{{url()}}',
+                data: $('#form').serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == 0) {
+                        layer.msg(response.message, {icon: 6, time: 3000});
+                    } else {
+                        layer.msg(response.message, {icon: 5, time: 3000});
+                    }
+                }
+
+            });
+        })
+
+    });
 
 </script>
 

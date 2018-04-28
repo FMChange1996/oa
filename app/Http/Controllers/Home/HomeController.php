@@ -82,6 +82,7 @@ class HomeController extends Controller
         return view('home/order_list');
     }
 
+    //渲染管理员模板
     public function admin_list()
     {
         $table =UsersModel::all();
@@ -108,9 +109,11 @@ class HomeController extends Controller
         return view('home/admin_rule');
     }
 
-    public function admin_edit()
+    //渲染管理员编辑模板
+    public function admin_edit($id)
     {
-        return view('home/admin_edit',['title' => '管理员编辑']);
+        $response = UsersModel::where('id', $id)->first();
+        return view('home/admin_edit', ['title' => '管理员编辑', 'table' => $response]);
     }
 
     //渲染添加管理员页面
@@ -172,5 +175,12 @@ class HomeController extends Controller
             }
 
         }
+    }
+
+    //更新管理员信息
+    public function update_user(Request $request)
+    {
+        $data = $request->all();
+
     }
 }
