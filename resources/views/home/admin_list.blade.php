@@ -32,14 +32,6 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">
-    <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-            <input class="layui-input" placeholder="开始日" name="start" id="start">
-            <input class="layui-input" placeholder="截止日" name="end" id="end">
-            <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-            <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-        </form>
-    </div>
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','{{url('home/admin_add')}}')"><i class="layui-icon"></i>添加</button>
@@ -79,17 +71,24 @@
             <td>{{date("Y/m/d H:i:s",$table -> create_time)}}</td>
 
             <td class="td-status">
-                @if($table -> status == 1)
+                @if($table -> status == 0)
                     <span class="layui-btn layui-btn-mini">已启用</span>
                 @else
                     <span class="layui-btn layui-btn-danger layui-btn-mini">已停用</span>
                 @endif
             </td>
+            @if (Session::get('username') == 'admin')
             <td class="td-manage">
-                <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
+                @if($table ->status == 0)
+                <a onclick="member_stop(this,'{{$table -> id}}')" href="javascript:;"  title="启用">
                     <i class="layui-icon">&#xe601;</i>
                 </a>
-                <a title="编辑" onclick="x_admin_show('编辑','{{url('home/admin_edit/id='.$table -> id)}}')"
+                @else
+                <a onclick="member_stop(this,'{{$table -> id}}')" href="javascript:;"  title="停用">
+                    <i class="layui-icon">&#xe62f;</i>
+                </a>
+                @endif
+                <a title="编辑" onclick="x_admin_show('编辑','{{url('home/admin_edit/id='.$table->id)}}')"
                    href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
@@ -97,6 +96,14 @@
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
+            @else
+            <td class="td-manage">
+                <a title="编辑" onclick="x_admin_show('编辑','{{url('home/admin_edit/id='.$table->id)}}')"
+                   href="javascript:;">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
+            </td>
+            @endif
         </tr>
         @endforeach
         </tbody>
@@ -120,26 +127,57 @@
 
     /*用户-停用*/
     function member_stop(obj,id){
-        layer.confirm('确认要停用吗？',function(index){
-
-            if($(obj).attr('title')=='启用'){
-
-                //发异步把用户状态进行更改
-                $(obj).attr('title','停用')
-                $(obj).find('i').html('&#xe62f;');
-
-                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                layer.msg('已停用!',{icon: 5,time:1000});
-
-            }else{
-                $(obj).attr('title','启用')
-                $(obj).find('i').html('&#xe601;');
-
-                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                layer.msg('已启用!',{icon: 5,time:1000});
-            }
-
-        });
+        if($(obj).attr('title')=='启用'){
+            layer.confirm('确认要停用吗？',function(index) {
+                   $.ajaxSetup({
+                       headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                   });
+                   $.ajax( {
+                       type:'POST',
+                       url:'{{url('home/change_status')}}',
+                       data:{
+                           id:id,
+                           status:1
+                       },
+                       dataType:'json',
+                       success:function (response) {
+                           if(response.code == 200){
+                               $(obj).attr('title','停用')
+                               $(obj).find('i').html('&#xe62f;');
+                               $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-danger').html('已停用');
+                               layer.msg('已停用!',{icon: 5,time:1000});
+                           }else{
+                               layer.msg('停用失败',{icon: 5,time:1000});
+                           }
+                       }
+                   });
+                });
+        }else{
+            layer.confirm('确认要启用吗？',function(indexs) {
+                    $.ajaxSetup({
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                    });
+                    $.ajax( {
+                        type:'POST',
+                        url:'{{url('home/change_status')}}',
+                        data:{
+                            id:id,
+                            status:0
+                        },
+                        dataType:'json',
+                        success:function (response) {
+                            if(response.code == 200){
+                                $(obj).attr('title','启用')
+                                $(obj).find('i').html('&#xe601;');
+                                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-danger').html('已启用');
+                                layer.msg('已启用!',{icon: 6,time:1000});
+                            }else{
+                                layer.msg('启用失败',{icon: 5,time:1000});
+                            }
+                        }
+                    });
+            });
+        }
     }
 
     /*用户-删除*/

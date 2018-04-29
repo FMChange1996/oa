@@ -18,7 +18,6 @@ Route::get('/', function () {
 Route::group(['namespace' => 'Home'],function (){
     Route::get('home','HomeController@home');
     Route::post('home/check','HomeController@check');
-    Route::get('home/add_user', 'HomeController@add_user');
 
 });
 
@@ -29,12 +28,14 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('home/member_list','HomeController@member_list');
     Route::get('home/member_del','HomeController@member_del');
     Route::get('home/order_list','HomeController@order_list');
-    Route::get('home/admin_list','HomeController@admin_list');
+    Route::get('home/admin_list/username={username}','AdminController@admin_list');
     Route::get('home/order_add','HomeController@order_add');
-    Route::get('home/admin_role','HomeController@admin_role');
-    Route::get('home/admin_cate','HomeController@admin_cate');
-    Route::get('home/admin_rule','HomeController@admin_rule');
-    Route::get('home/admin_edit/id={id}', 'HomeController@admin_edit');
-    Route::get('home/admin_add','HomeController@admin_add');
-    Route::post('home/add_user', 'HomeController@add_user');
+    Route::get('home/admin_role','AdminController@admin_role');
+    Route::get('home/admin_cate','AdminController@admin_cate');
+    Route::get('home/admin_rule','AdminController@admin_rule');
+    Route::get('home/admin_edit/id={id}', 'AdminController@admin_edit');
+    Route::get('home/admin_add','AdminController@admin_add');
+    Route::post('home/update_user','AdminController@update_user');
+    Route::post('home/add_user', 'AdminController@add_user');
+    Route::post('home/change_status','AdminController@change_status');
 });

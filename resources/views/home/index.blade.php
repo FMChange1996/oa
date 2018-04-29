@@ -118,7 +118,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="{{url('home/admin_list')}}">
+                        <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>管理员列表</cite>
                         </a>
@@ -126,19 +126,7 @@
                     <li>
                         <a _href="{{url('home/admin_role')}}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>角色管理</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="{{url('home/admin_cate')}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限分类</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="{{url('home/admin_rule')}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>权限管理</cite>
+                            <cite>修改密码</cite>
                         </a>
                     </li >
                 </ul>

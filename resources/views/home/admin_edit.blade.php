@@ -29,7 +29,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="username" name="username"
-                       autocomplete="off" value="{{ $table -> username }}" class="layui-input" disabled>
+                       autocomplete="off" value="{{$table -> username}}" class="layui-input" disabled>
             </div>
         </div>
         <div class="layui-form-item">
@@ -58,18 +58,25 @@
                 <span class="x-red">*</span>邮箱
             </label>
             <div class="layui-input-inline">
-                <input type="text" value="{{$table -> mail}}" id="email" name="mail"
+                <input type="text" value="{{$table ->mail}}" id="email" name="mail"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="x-red">*</span>角色</label>
             <div class="layui-input-inline">
+                @if(Session::get('username') == 'admin')
                 <select name="role">
                     <option value=""></option>
                     <option value="0">超级管理员</option>
                     <option value="1">管理员</option>
                 </select>
+                @else
+                    <select name="role">
+                        <option value=""></option>
+                        <option value="1">管理员</option>
+                    </select>
+                @endif
             </div>
         </div>
         <div class="layui-form-item">
@@ -87,7 +94,7 @@
         $('#submit').on('click', function (event) {
             $.ajax({
                 type: 'POST',
-                url: '{{url()}}',
+                url: '{{url('')}}',
                 data: $('#form').serialize(),
                 dataType: 'json',
                 success: function (response) {
