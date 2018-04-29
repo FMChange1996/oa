@@ -114,11 +114,8 @@ class AdminController extends Controller
     public function users_status(Request $request)
     {
         $id = $request->all();
-        if ($id == 0) {
-            return response()->json(['code' => 200, 'status' => 1]);
-        } else {
-            return response()->json(['code' => 200, 'status' => 0]);
-        }
+        $status = UsersModel::where('id', $id)->get(['status']);
+        return response()->json(['code' => 200, 'status' => $status]);
 
 
     }
