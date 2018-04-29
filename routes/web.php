@@ -38,4 +38,5 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::post('home/update_user','AdminController@update_user');
     Route::post('home/add_user', 'AdminController@add_user');
     Route::post('home/change_status','AdminController@change_status');
+    Route::get('home/users_status', 'AdminController@users_status');
 });

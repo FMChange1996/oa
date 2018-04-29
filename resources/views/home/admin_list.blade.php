@@ -127,57 +127,87 @@
 
     /*用户-停用*/
     function member_stop(obj,id){
-        if($(obj).attr('title')=='启用'){
-            layer.confirm('确认要停用吗？',function(index) {
-                   $.ajaxSetup({
-                       headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
-                   });
-                   $.ajax( {
-                       type:'POST',
-                       url:'{{url('home/change_status')}}',
-                       data:{
-                           id:id,
-                           status:1
-                       },
-                       dataType:'json',
-                       success:function (response) {
-                           if(response.code == 200){
-                               $(obj).attr('title','停用')
-                               $(obj).find('i').html('&#xe62f;');
-                               $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-danger').html('已停用');
-                               layer.msg('已停用!',{icon: 5,time:1000});
-                           }else{
-                               layer.msg('停用失败',{icon: 5,time:1000});
-                           }
-                       }
-                   });
-                });
-        }else{
-            layer.confirm('确认要启用吗？',function(indexs) {
-                    $.ajaxSetup({
-                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
-                    });
-                    $.ajax( {
-                        type:'POST',
-                        url:'{{url('home/change_status')}}',
-                        data:{
-                            id:id,
-                            status:0
-                        },
-                        dataType:'json',
-                        success:function (response) {
-                            if(response.code == 200){
-                                $(obj).attr('title','启用')
-                                $(obj).find('i').html('&#xe601;');
-                                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-danger').html('已启用');
-                                layer.msg('已启用!',{icon: 6,time:1000});
-                            }else{
-                                layer.msg('启用失败',{icon: 5,time:1000});
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+        });
+        $.ajax({
+            type: 'GET',
+            url: '{{url('home/users_status')}}',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function (response) {
+                if (response.code == 200) {
+                    if (response.status == 0) {
+                        layer.confirm('确定要停用吗', {
+                            btn: ['确定', '取消'],
+                            btn1: function (index, layero) {
+                                $.ajaxSetup({
+                                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                                });
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '{{url('/home/change_status')}}',
+                                    data: {
+                                        id: id,
+                                        status: 1
+                                    },
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        if (response.code == 200) {
+                                            layer.close(index);
+                                            $(obj).attr('title', '停用')
+                                            $(obj).find('i').html('&#xe62f;');
+                                            $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                                            layer.msg('已停用!', {icon: 5, time: 1000});
+                                            location.href = "{{url('home/admin_list')}}";
+                                        } else {
+
+                                        }
+                                    }
+                                })
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        layer.confirm('确定要启用吗', {
+                            btn: ['确定', '取消'],
+                            btn1: function (index, layero) {
+                                $.ajaxSetup({
+                                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                                });
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '{{url('/home/change_status')}}',
+                                    data: {
+                                        id: id,
+                                        status: 0
+                                    },
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        if (response.code == 200) {
+                                            layer.close(index);
+                                            $(obj).attr('title', '启用')
+                                            $(obj).find('i').html('&#xe601;');
+                                            $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                                            layer.msg('已启用!', {icon: 6, time: 1000});
+                                            location.href = "{{url('home/admin_list')}}";
+                                        } else {
+
+                                        }
+                                    }
+                                })
+                            }
+                        });
+                    }
+                } else {
+                    layer.msg('获取用户信息失败！', {icon: 5, time: 3000})
+                }
+            }
+
             });
-        }
+
+
     }
 
     /*用户-删除*/

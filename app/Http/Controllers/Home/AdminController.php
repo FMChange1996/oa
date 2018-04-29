@@ -108,6 +108,18 @@ class AdminController extends Controller
 
     public function change_status(Request $request)
     {
-       var_dump($request ->all());
+        return response()->json(['code' => 200]);
+    }
+
+    public function users_status(Request $request)
+    {
+        $id = $request->all();
+        if ($id == 0) {
+            return response()->json(['code' => 200, 'status' => 1]);
+        } else {
+            return response()->json(['code' => 200, 'status' => 0]);
+        }
+
+
     }
 }
