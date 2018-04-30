@@ -235,8 +235,6 @@
                             layer.msg('已删除!',{icon:6,time:500,end:function () {
                                     location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
                                 }});
-
-
                         } else{
                             layer.msg('删除失败!',{icon:5,time:1000});
                         }
@@ -267,8 +265,9 @@
                     success:function (response) {
                         if (response.code == 200){
                             layer.close(index);
-                            layer.msg('恢复成功', {icon: 6,time:1000});
-                            location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
+                            layer.msg('恢复成功', {icon: 6,time:1000,end:function () {
+                                    location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
+                                }});
                         } else{
                             layer.msg('恢复失败', {icon: 5,time:2000});
                         }
