@@ -41,22 +41,25 @@ class HomeController extends Controller
             if ($users == null){
                 return response() -> json(['status' => 1 , 'message' => '该用户不存在，请检查用户名']);
             }else{
-                if ($users -> username == $data['username'] && $users -> password == md5($data['password'])){
-                    if ($users -> status == 1){
-                        return response() -> json(['status' => 1 , 'message' => '该账号已被禁用，请联系管理员']);
-                    }else{
-                        session() -> put([
-                            'username' =>$users -> username ,
-                            'password' => $users -> password,
-                            'id' => $users -> id
-                        ]);
-                        return response() -> json(['status' => 0 , 'message' => '登录成功']);
-                    }
+                if ($users['deleted_at'] != null){
+                    return response() -> json(['status' => 1 , 'message' => '该用户不存在，请检查用户名']);
                 }else{
-                    return response() -> json(['status' => 1 , 'message' => '用户名或者密码不正确，请检查']);
+                    if ($users -> username == $data['username'] && $users -> password == md5($data['password'])){
+                        if ($users -> status == 1){
+                            return response() -> json(['status' => 1 , 'message' => '该账号已被禁用，请联系管理员']);
+                        }else{
+                            session() -> put([
+                                'username' =>$users -> username ,
+                                'password' => $users -> password,
+                                'id' => $users -> id
+                            ]);
+                            return response() -> json(['status' => 0 , 'message' => '登录成功']);
+                        }
+                    }else{
+                        return response() -> json(['status' => 1 , 'message' => '用户名或者密码不正确，请检查']);
+                    }
                 }
             }
-
        }
     }
 
@@ -95,5 +98,5 @@ class HomeController extends Controller
     {
         return view('home/order_add');
     }
-    
+
 }
