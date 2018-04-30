@@ -18,4 +18,8 @@ class UsersModel extends Model
 
     protected $dates = ['delete_at'];
 
+    public function fromDateTime($value){
+        return strtotime(parent::fromDateTime($value));
+    }
+
 }

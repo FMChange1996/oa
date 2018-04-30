@@ -163,8 +163,11 @@
                                             layer.msg('已停用!', {icon: 5, time: 1000});
                                             location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
                                         } else {
-
+                                            layer.msg(response.message,{icon:5,time:3000});
                                         }
+                                    },
+                                    error:function () {
+                                        
                                     }
                                 })
                             }

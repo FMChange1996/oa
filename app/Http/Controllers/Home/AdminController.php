@@ -108,14 +108,27 @@ class AdminController extends Controller
 
     public function change_status(Request $request)
     {
-        return response()->json(['code' => 200]);
+        $data = $request -> all();
+        $response = UsersModel::where('id',$data['id']) -> first(['status','username']);
+        if ($response -> username == 'admin'){
+            return response() -> json(['code' => 500 , 'message' => '超级管理员账户不可被停用']);
+        }else{
+            $res = UsersModel::find($data['id']);
+            $res -> status = $data['status'];
+            if ($res -> save()){
+                return response() -> json(['code' => 200]);
+            }else{
+                return response() -> json(['code' => 500 , 'message' => '更改失败！']);
+            }
+        }
+
     }
 
     public function users_status(Request $request)
     {
         $id = $request->all();
-        $status = UsersModel::where('id', $id)->get(['status']);
-        return response()->json(['code' => 200, 'status' => $status]);
+        $status = UsersModel::where('id', $id) -> first(['status']);
+        return response()->json(['code' => 200, 'status' => $status -> status]);
 
 
     }

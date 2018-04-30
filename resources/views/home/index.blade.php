@@ -26,7 +26,7 @@
         <li class="layui-nav-item">
             <a href="javascript:;">{{Session::get('username')}}</a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
-                <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
+                <dd><a onclick="x_admin_show('个人信息','{{url('home/admin_edit/id='.Session::get('id'))}}')">个人信息</a></dd>
                 <dd><a href="{{url('home/logout')}}">切换帐号</a></dd>
                 <dd><a href="{{url('home/logout')}}">退出</a></dd>
             </dl>
@@ -113,22 +113,25 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe726;</i>
-                    <cite>管理员管理</cite>
+                    <cite>用户中心</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
+                    @if(Session::get('username') == 'admin')
                     <li>
                         <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>管理员列表</cite>
                         </a>
                     </li >
+                    @else
                     <li>
-                        <a _href="{{url('home/admin_role')}}">
+                        <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>修改密码</cite>
                         </a>
                     </li >
+                    @endif
                 </ul>
             </li>
             <li>

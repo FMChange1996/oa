@@ -45,7 +45,11 @@ class HomeController extends Controller
                     if ($users -> status == 1){
                         return response() -> json(['status' => 1 , 'message' => '该账号已被禁用，请联系管理员']);
                     }else{
-                        session() -> put(['username' =>$users -> username , 'password' => $users -> password]);
+                        session() -> put([
+                            'username' =>$users -> username ,
+                            'password' => $users -> password,
+                            'id' => $users -> id
+                        ]);
                         return response() -> json(['status' => 0 , 'message' => '登录成功']);
                     }
                 }else{
