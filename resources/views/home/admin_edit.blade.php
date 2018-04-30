@@ -67,49 +67,41 @@
             <div class="layui-input-inline">
                 @if(Session::get('username') == 'admin')
                 <select name="role">
-                    <option value=""></option>
-                    <option value="0">超级管理员</option>
-                    <option value="1">管理员</option>
-                </select>
-                @else
-                    <select name="role">
-                        <option value=""></option>
+                    @if($table -> role == 0)
+                        <option value="0">超级管理员</option>
                         <option value="1">管理员</option>
-                    </select>
+                    @else
+                        <option value="1">管理员</option>
+                     @endif
+                </select>
                 @endif
             </div>
         </div>
         <div class="layui-form-item">
             <label for="L_repass" class="layui-form-label">
             </label>
-            <input class="layui-btn" value="保存" id="sumbit" name="submit">
+            <input type="hidden" value="{{Session::get('id')}}" name="id">
+            <input type="button" class="layui-btn" value="保存" id="button">
         </div>
     </form>
 </div>
 <script>
     $(function () {
-        $.ajaxSetup({
-            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
-        });
-        $('#submit').on('click', function (event) {
+       $.ajaxSetup({
+           headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+       });
+       $('#button').on('click',function (event) {
             $.ajax({
-                type: 'POST',
-                url: '{{url('')}}',
-                data: $('#form').serialize(),
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status == 0) {
-                        layer.msg(response.message, {icon: 6, time: 3000});
-                    } else {
-                        layer.msg(response.message, {icon: 5, time: 3000});
-                    }
+                type:'POST',
+                url:'{{url('home/change_user')}}',
+                data:$('#from').serialize(),
+                dataType:'json',
+                success:function (response) {
+                    
                 }
-
-            });
-        })
-
+            })
+       })
     });
-
 </script>
 
 </body>

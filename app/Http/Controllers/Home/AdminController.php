@@ -129,7 +129,13 @@ class AdminController extends Controller
         $id = $request->all();
         $status = UsersModel::where('id', $id) -> first(['status']);
         return response()->json(['code' => 200, 'status' => $status -> status]);
+    }
 
+    //更改用户信息
+    public function change_user(Request $request)
+    {
+        $data = $request -> all();
+        var_dump($data);
 
     }
 }
