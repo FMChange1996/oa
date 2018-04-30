@@ -41,7 +41,7 @@
                        autocomplete="off" class="layui-input">
             </div>
             <div class="layui-form-mid layui-word-aux">
-                6到16个字符
+                如不修改密码，请输入账户原密码
             </div>
         </div>
         <div class="layui-form-item">
@@ -67,12 +67,17 @@
             <div class="layui-input-inline">
                 @if(Session::get('username') == 'admin')
                 <select name="role">
-                    @if($table -> role == 0)
+                    @if(Session::get('username') == 'admin')
                         <option value="0">超级管理员</option>
                         <option value="1">管理员</option>
                     @else
-                        <option value="1">管理员</option>
-                     @endif
+                        @if($table -> role == 0)
+                            <option value="0">超级管理员</option>
+                            <option value="1">管理员</option>
+                        @else
+                            <option value="1">管理员</option>
+                        @endif
+                    @endif
                 </select>
                 @endif
             </div>
@@ -97,7 +102,15 @@
                 data:$('#from').serialize(),
                 dataType:'json',
                 success:function (response) {
-                    
+                    if (response.status == 0){
+                        layer.msg(response.message,{icon:6,time:2000,end:function () {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                                window.parent.location.replace("{{url('home/admin_list/username='.Session::get('username'))}}");
+                            }});
+                    } else{
+                        layer.msg(response.message,{icon:5,time:2000});
+                    }
                 }
             })
        })

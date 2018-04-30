@@ -71,12 +71,6 @@ class AdminController extends Controller
         }
     }
 
-    //渲染
-    public function admin_rule()
-    {
-        return view('home/admin_rule');
-    }
-
     //渲染添加管理员页面
     public function admin_add()
     {
@@ -96,14 +90,17 @@ class AdminController extends Controller
 
     }
 
-    public function admin_role()
+    //使用软删除方法删除用户
+    public function delete_user(Request $request)
     {
-        return view('home/admin_role');
-    }
-
-    public function admin_cate()
-    {
-        return view('home/admin_cate');
+        $data = $request -> all();
+        $del = UsersModel::find($data['id']);
+        $del -> delete();
+        if ($del -> trashed()){
+            return response() -> json(['code' => 200]);
+        }else{
+            return response() -> json(['code' => 500]);
+        }
     }
 
     //改变用户当前状态
@@ -155,7 +152,7 @@ class AdminController extends Controller
             return response() -> json(['status' => 1 , 'message' => $validate -> errors() -> first()]);
         }else{
             $password1 = UsersModel::where('id',$data['id']) -> first();
-            if ($password1 == md5($data['password'])){
+            if ($password1-> password == md5($data['password'])){
                 $req = UsersModel::find($data['id']);
                 $req -> mail = $data['mail'];
                 $req -> mobile = $data['mobile'];
@@ -166,7 +163,7 @@ class AdminController extends Controller
                 }
             }else{
                 $req = UsersModel::find($data['id']);
-                $req -> password = $data['password'];
+                $req -> password = md5($data['password']);
                 $req -> mail = $data['mail'];
                 $req -> mobile = $data['mobile'];
                 if ($req -> save()){

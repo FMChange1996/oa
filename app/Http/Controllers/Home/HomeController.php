@@ -91,20 +91,9 @@ class HomeController extends Controller
         return view('home/order_list');
     }
 
-
     public function order_add()
     {
         return view('home/order_add');
     }
-
-
-
-
-
-    //更新管理员信息
-    public function update_user(Request $request)
-    {
-        $data = $request->all();
-
-    }
+    
 }

@@ -92,7 +92,7 @@
                    href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                <a title="删除" onclick="member_del(this,'{{$table -> id}}')" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
@@ -215,10 +215,36 @@
 
     /*用户-删除*/
     function member_del(obj,id){
-        layer.confirm('确认要删除吗？',function(index){
-            //发异步删除数据
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
+        layer.confirm('确认要删除吗？',{
+            btn:['确定','取消'],
+            btn1:function(index,layero){
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                });
+                $.ajax({
+                    type:'POST',
+                    url:'{{url('home/delete_user')}}',
+                    data:{
+                        id:id
+                    },
+                    dataType:'json',
+                    success:function (response) {
+                        if (response.code == 200){
+                            layer.close(index);
+                            $(obj).parents("tr").remove();
+                            layer.msg('已删除!',{icon:6,time:500,end:function () {
+                                    location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
+                                }});
+
+
+                        } else{
+                            layer.msg('删除失败!',{icon:5,time:1000});
+                        }
+                        
+                    }
+                });
+
+            }
         });
     }
 

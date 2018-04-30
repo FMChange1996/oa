@@ -116,7 +116,11 @@
                     dataType:'json',
                     success:function (response) {
                         if(response.status == 0){
-                            layer.msg(response.message, {icon: 6, time: 3000});
+                            layer.msg(response.message, {icon: 6, time: 3000,end:function () {
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(index);
+                                    window.parent.location.replace("{{url('home/admin_list/username='.Session::get('username'))}}");
+                                }});
                         }else{
                             layer.msg(response.message, {icon: 5, time: 3000});
                         }
