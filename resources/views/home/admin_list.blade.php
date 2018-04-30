@@ -33,7 +33,7 @@
 </div>
 <div class="x-body">
     <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>恢复删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','{{url('home/admin_add')}}')"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：{{$count}} 条</span>
     </xblock>
@@ -250,14 +250,31 @@
 
 
 
-    function delAll (argument) {
-
-        var data = tableCheck.getData();
-
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+    function delAll () {
+        layer.confirm('确认要恢复吗？',{
+            btn:['确定','取消'],
+            btn1:function(index,layero){
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                });
+                $.ajax({
+                    type:'POST',
+                    url:'{{url('home/recovery_user')}}',
+                    data:{
+                        code:200
+                    },
+                    dataType:'json',
+                    success:function (response) {
+                        if (response.code == 200){
+                            layer.close(index);
+                            layer.msg('恢复成功', {icon: 6,time:1000});
+                            location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
+                        } else{
+                            layer.msg('恢复失败', {icon: 5,time:2000});
+                        }
+                    }
+                });
+            }
         });
     }
 </script>

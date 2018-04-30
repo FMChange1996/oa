@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\UsersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class AdminController extends Controller
 {
@@ -94,12 +95,17 @@ class AdminController extends Controller
     public function delete_user(Request $request)
     {
         $data = $request -> all();
-        $del = UsersModel::find($data['id']);
-        $del -> delete();
-        if ($del -> trashed()){
-            return response() -> json(['code' => 200]);
-        }else{
-            return response() -> json(['code' => 500]);
+        $up = UsersModel::find($data['id']);
+        $up -> status = 1;
+        if ($up -> save()){
+            $del = UsersModel::find($data['id']);
+            $del -> delete();
+            if ($del -> trashed()){
+                return response() -> json(['code' => 200]);
+
+            }else{
+                return response() -> json(['code' => 500]);
+            }
         }
     }
 
@@ -178,5 +184,21 @@ class AdminController extends Controller
             }
         }
 
+    }
+
+    //恢复所有软删除用户
+    public function recovery_user(Request $request)
+    {
+        $data = $request -> all();
+        if ($data['code'] == 200){
+            $recovery = UsersModel::withTrashed();
+            if ($recovery -> restore()){
+                return response() -> json(['code' => 200]);
+            }else{
+                return response() -> json(['code' => 500]);
+            }
+        }else{
+            pass;
+        }
     }
 }

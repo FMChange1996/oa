@@ -38,4 +38,5 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('home/users_status', 'AdminController@users_status');
     Route::post('home/change_user','AdminController@change_user');
     Route::post('home/delete_user','AdminController@delete_user');
+    Route::post('home/recovery_user','AdminController@recovery_user');
 });
