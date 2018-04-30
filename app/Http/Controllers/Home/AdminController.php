@@ -106,6 +106,7 @@ class AdminController extends Controller
         return view('home/admin_cate');
     }
 
+    //改变用户当前状态
     public function change_status(Request $request)
     {
         $data = $request -> all();
@@ -124,6 +125,7 @@ class AdminController extends Controller
 
     }
 
+    //获取用户当前状态
     public function users_status(Request $request)
     {
         $id = $request->all();
@@ -135,7 +137,49 @@ class AdminController extends Controller
     public function change_user(Request $request)
     {
         $data = $request -> all();
-        var_dump($data);
+        $message = [
+            'password.required' => '密码不能为空',
+            'mail.required' => '邮箱不能为空',
+            'mail.email' => '邮箱格式不正确',
+            'mobile.required' => '手机号不能为空',
+            'mobile.min' => '手机号格式不正确',
+        ];
+
+        $validate = Validator::make($data,[
+            'password' => 'required',
+            'mail' => 'required|email',
+            'mobile' => 'required|min:11'
+        ],$message);
+
+        if ($validate -> fails()){
+            return response() -> json(['status' => 1 , 'message' => $validate -> errors() -> first()]);
+        }else{
+            $password1 = UsersModel::where('id',$data['id']) -> first();
+            if ($password1 == md5($data['password'])){
+                $req = UsersModel::find($data['id']);
+                $req -> mail = $data['mail'];
+                $req -> mobile = $data['mobile'];
+                if ($req ->save()){
+                    return response() -> json(['status' => 0 , 'message' => '保存成功']);
+                }else{
+                    return response() -> json(['status' => 1 , 'message' => '保存失败']);
+                }
+            }else{
+                $req = UsersModel::find($data['id']);
+                $req -> password = $data['password'];
+                $req -> mail = $data['mail'];
+                $req -> mobile = $data['mobile'];
+                if ($req -> save()){
+                    session() -> forget('username');
+                    session() -> forget('password');
+                    session() -> forget('id');
+                    session() -> flush();
+                    return response() -> json(['status' => 0 , 'message' => '保存成功，请使用新密码登录']);
+                }else{
+                    return response() -> json(['status' => 1 , 'message' => '保存失败' ]);
+                }
+            }
+        }
 
     }
 }

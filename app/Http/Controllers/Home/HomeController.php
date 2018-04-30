@@ -65,6 +65,7 @@ class HomeController extends Controller
     {
         session() -> forget('username');
         session() -> forget('password');
+        session() -> forget('id');
         session() -> flush();
         return redirect('home');
     }
