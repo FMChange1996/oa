@@ -44,7 +44,8 @@
                 </tr>
                 <tr>
                     <td>当前时间 </td>
-                    <td>{{date('Y-m-d H:i:s')}}</td>
+                    {{date_default_timezone_set('Asia/Shanghai')}}
+                    <td>{{date('Y-m-d H:i:s',time())}}</td>
                 </tr>
                 </tbody>
             </table>
