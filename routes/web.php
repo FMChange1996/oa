@@ -22,14 +22,12 @@ Route::group(['namespace' => 'Home'],function (){
 });
 
 Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
-    Route::get('home/admin_list/username={username}','AdminController@admin_list');
+    //HomeController
     Route::get('home/index','HomeController@index');
     Route::get('home/welcome','HomeController@welcome');
     Route::get('home/logout','HomeController@logout');
-    Route::get('home/member_list','HomeController@member_list');
-    Route::get('home/member_del','HomeController@member_del');
-    Route::get('home/order_list','HomeController@order_list');
-    Route::get('home/order_add','HomeController@order_add');
+    //AdminController
+    Route::get('home/admin_list/username={username}', 'AdminController@admin_list');
     Route::get('home/admin_edit/id={id}', 'AdminController@admin_edit');
     Route::get('home/admin_add','AdminController@admin_add');
     Route::post('home/update_user','AdminController@update_user');
@@ -39,4 +37,14 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::post('home/change_user','AdminController@change_user');
     Route::post('home/delete_user','AdminController@delete_user');
     Route::post('home/recovery_user','AdminController@recovery_user');
+    //MemberController
+    Route::get('home/member_list', 'MemberController@member_list');
+    Route::get('home/member_add', 'MemberController@member_add');
+    Route::get('home/member_del', 'MemberController@member_del');
+    //OrderController
+    Route::get('home/order_list', 'OrderController@order_list');
+    Route::get('home/order_add', 'OrderController@order_add');
+    //ExpressController
+
+
 });

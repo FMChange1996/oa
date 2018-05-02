@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\UsersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class AdminController extends Controller
 {
@@ -14,7 +13,7 @@ class AdminController extends Controller
    public function admin_edit($id)
    {
        $response = UsersModel::where('id',$id) ->first();
-       return view('home/admin_edit',['title' => '管理员编辑','table' => $response]);
+       return view('home/admin/admin_edit', ['title' => '管理员编辑', 'table' => $response]);
    }
 
     //添加管理员
@@ -75,7 +74,7 @@ class AdminController extends Controller
     //渲染添加管理员页面
     public function admin_add()
     {
-        return view('home/admin_add',['title' => '管理员添加']);
+        return view('home/admin/admin_add', ['title' => '管理员添加']);
     }
 
     //渲染管理员模板
@@ -83,10 +82,10 @@ class AdminController extends Controller
     {
         if ($username == 'admin'){
             $table =UsersModel::all();
-            return view('home/admin_list',['title' => '管理员列表','table' => $table , 'count' => $table ->count()]);
+            return view('home/admin/admin_list', ['title' => '管理员列表', 'table' => $table, 'count' => $table->count()]);
         }else{
             $table =UsersModel::where('username',$username) -> get();
-            return view('home/admin_list',['title' => '管理员列表','table' => $table , 'count' => $table ->count()]);
+            return view('home/admin/admin_list', ['title' => '管理员列表', 'table' => $table, 'count' => $table->count()]);
         }
 
     }

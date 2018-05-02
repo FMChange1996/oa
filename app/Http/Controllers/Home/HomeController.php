@@ -79,24 +79,8 @@ class HomeController extends Controller
         return view('home/welcome');
     }
 
-    public function member_list()
-    {
-        return view('home/member_list');
-    }
 
-    public function member_del()
-    {
-        return view('home/member_del');
-    }
 
-    public function order_list()
-    {
-        return view('home/order_list');
-    }
 
-    public function order_add()
-    {
-        return view('home/order_add');
-    }
 
 }
