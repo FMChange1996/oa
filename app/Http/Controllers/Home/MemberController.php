@@ -97,9 +97,10 @@ class MemberController extends Controller
     }
 
     //渲染客户编辑模板
-    public function member_edit()
+    public function member_edit($id)
     {
-        return view('home/member_edit', ['title' => '客户编辑']);
+        $data = MemberModel::where('id', $id)->first();
+        return view('home/member/member_edit', ['title' => '客户编辑', 'table' => $data]);
     }
 
     //修改客户资料

@@ -82,10 +82,11 @@
                 <td>{{$table -> address}}</td>
                 <td>{{date("Y/m/d H:i:s",$table -> create_at)}}</td>
             <td class="td-manage">
-                <a title="编辑"  onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">
+                <a title="编辑" onclick="x_admin_show('编辑','{{url('home/member_edit/id='.$table -> id)}}',600,400)"
+                   href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                <a title="删除" onclick="member_del(this,'{{$table -> id}}')" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>

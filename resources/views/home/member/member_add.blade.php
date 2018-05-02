@@ -66,11 +66,11 @@
                 可空
             </div>
         </div>
-        <div class="layui-form-item layui-form-text">
+        <div class="layui-form-item">
             <label for="address" class="layui-form-label">
                 <span class="x-red">*</span>地址
             </label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <textarea name="address" placeholder="请输入地址" class="layui-textarea"></textarea>
             </div>
         </div>

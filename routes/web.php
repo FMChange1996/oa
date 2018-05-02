@@ -43,6 +43,7 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('home/member_del', 'MemberController@member_del');
     Route::post('home/add_member', 'MemberController@add_member');
     Route::get('home/seach_user', 'MemberController@seach_user');
+    Route::get('home/member_edit/id={id}', 'MemberController@member_edit');
     //OrderController
     Route::get('home/order_list', 'OrderController@order_list');
     Route::get('home/order_add', 'OrderController@order_add');
