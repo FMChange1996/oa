@@ -30,7 +30,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="username" name="username" value="{{$table -> username}}"
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" disabled="disabled">
             </div>
         </div>
         <div class="layui-form-item">

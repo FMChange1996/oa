@@ -107,6 +107,7 @@ class MemberController extends Controller
     public function edit_member(Request $request)
     {
         $data = $request->all();
+        var_dump($data);
 
     }
 }
