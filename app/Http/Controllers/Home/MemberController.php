@@ -81,6 +81,7 @@ class MemberController extends Controller
 
     }
 
+    //客户筛选
     public function seach_user(Request $request)
     {
         $data = $request->all();
@@ -93,5 +94,11 @@ class MemberController extends Controller
             return response()->view('home/member/member_list', ['title' => '客户列表', 'table' => $table, 'count' => $table->count()]);
         }
 
+    }
+
+    //渲染客户编辑模板
+    public function member_edit()
+    {
+        return view('home/member_edit');
     }
 }
