@@ -99,6 +99,13 @@ class MemberController extends Controller
     //渲染客户编辑模板
     public function member_edit()
     {
-        return view('home/member_edit');
+        return view('home/member_edit', ['title' => '客户编辑']);
+    }
+
+    //修改客户资料
+    public function edit_member(Request $request)
+    {
+        $data = $request->all();
+
     }
 }
