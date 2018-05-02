@@ -41,6 +41,8 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('home/member_list', 'MemberController@member_list');
     Route::get('home/member_add', 'MemberController@member_add');
     Route::get('home/member_del', 'MemberController@member_del');
+    Route::post('home/add_member', 'MemberController@add_member');
+    Route::get('home/seach_user', 'MemberController@seach_user');
     //OrderController
     Route::get('home/order_list', 'OrderController@order_list');
     Route::get('home/order_add', 'OrderController@order_add');
