@@ -207,7 +207,14 @@ class MemberController extends Controller
     public function seach_name(Request $request)
     {
         $data = $request->all();
-        $table = MemberModel::where('username', $data['seach_name'])->get();
-        return view('home/member/member_del', ['title' => '客户删除列表', 'table' => $table, 'count' => $table->count()]);
+        $username = $data['seach_name'];
+        if ($username == null) {
+            $table = MemberModel::onlyTrashed()->get();
+            return view('home/member/member_del', ['title' => '客户删除列表', 'table' => $table, 'count' => $table->count()]);
+        } else {
+            $table = MemberModel::onlyTrashed()->where('username', $username)->get();
+            return view('home/member/member_del', ['title' => '客户删除列表', 'table' => $table, 'count' => $table->count()]);
+        }
+
     }
 }
