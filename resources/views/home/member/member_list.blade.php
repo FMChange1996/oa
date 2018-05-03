@@ -42,7 +42,6 @@
         </form>
     </div>
     <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量恢复</button>
         <button class="layui-btn" onclick="x_admin_show('添加客户','{{url('home/member_add')}}',600,400)"><i
                     class="layui-icon"></i>添加
         </button>
@@ -51,9 +50,6 @@
     <table class="layui-table">
         <thead>
         <tr>
-            <th>
-                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
             <th>ID</th>
             <th>用户名</th>
             <th>性别</th>
@@ -67,9 +63,6 @@
         <tbody>
         <tr>
             @foreach($table as $table)
-            <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
                 <td>{{$table -> id}}</td>
                 <td>{{$table -> username}}</td>
                 @if($table -> sex == 0)
@@ -99,25 +92,34 @@
 
     /*用户-删除*/
     function member_del(obj,id){
-        layer.confirm('确认要删除吗？',function(index){
-            //发异步删除数据
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
+        layer.confirm('确认要删除吗？',{
+            btn:['确定','取消'],
+            btn1:function (index,layero) {
+                $.ajaxSetup({
+                   headers:{'X-CSRF-TOKEN':'{{csrf_token()}}'}
+                });
+                $.ajax({
+                    type:'POST',
+                    url:'{{url('home/del_member')}}',
+                    data:{
+                        id:id
+                    },
+                    dataType:'json',
+                    success:function (response) {
+                        if (response.code == 200){
+                            layer.msg('已删除',{icon:6,time:600,end:function () {
+                                    layer.close(index);
+                                    location.href = '{{url('home/member_list')}}';
+                                }})
+                        } else{
+                            layer.msg('删除失败',{icon:5,time:1000});
+                        }
+                    }
+                })
+            }
         });
     }
 
-
-
-    function delAll (argument) {
-
-        var data = tableCheck.getData();
-
-        layer.confirm('确认要恢复吗？', function (index) {
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-    }
 
 
 </script>

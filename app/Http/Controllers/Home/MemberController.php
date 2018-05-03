@@ -147,4 +147,17 @@ class MemberController extends Controller
 
 
     }
+
+    //使用软删除方法删除客户
+    public function del_member(Request $request)
+    {
+        $data = $request -> all();
+        $find = MemberModel::find($data['id']);
+        $find -> delete();
+        if ($find -> trashed()){
+            return response() -> json(['code' => 200]);
+        }else{
+            return response() -> json(['code' => 500]);
+        }
+    }
 }
