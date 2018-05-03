@@ -20,6 +20,7 @@ class MemberController extends Controller
     //渲染客户删除模板
     public function member_del()
     {
+        $table = MemberModel::onlyTrashed() -> get();
         return view('home/member/member_del');
     }
 
@@ -159,5 +160,11 @@ class MemberController extends Controller
         }else{
             return response() -> json(['code' => 500]);
         }
+    }
+
+    //渲染已删除客户列表
+    public function deleted_list()
+    {
+
     }
 }
