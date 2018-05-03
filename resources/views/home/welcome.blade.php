@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="{{URL::asset('css/font.css')}}">
     <link rel="stylesheet" href="{{URL::asset('css/xadmin.css')}}">
+    {{--{{date_default_timezone_set('PRC')}}--}}
 </head>
 <body>
 <div class="x-body">
@@ -44,14 +45,12 @@
                 </tr>
                 <tr>
                     <td>当前时间 </td>
-                    {{date_default_timezone_set('Asia/Shanghai')}}
                     <td>{{date('Y-m-d H:i:s',time())}}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </fieldset>
-
 </div>
 </body>
 </html>

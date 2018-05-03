@@ -97,9 +97,13 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == 0) {
-
+                        layer.msg(response.message,{icon:6,time:600,end:function () {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
+                                window.parent.location.replace("{{url('home/member_list')}}");
+                            }})
                     } else {
-
+                        layer.msg(response.message,{icon:5,time:1000});
                     }
                 }
             });

@@ -116,12 +116,30 @@ class MemberController extends Controller
         ];
         if ($data['mail'] == null){
             $validate = Validator::make($data,[
-                ''
+                'mobile' => 'required|min:11|max:12',
+                'address' => 'required'
             ],$message);
         }else{
             $validate = Validator::make($data,[
-                ''
+                'mail' => 'email',
+                'mobile' => 'required|min:11|max:12',
+                'address' => 'required'
             ],$message);
+        }
+
+        if ($validate -> fails()){
+            return response() -> json(['status' => 1 , 'message' => $validate -> errors() -> first()]);
+        }else{
+            $find = MemberModel::find($data['id']);
+            $find -> mobile = $data['mobile'];
+            $find -> mail = $data['mail'];
+            $find -> address = $data['address'];
+            if ($find -> save()){
+                return response() -> json(['status' => 0 , 'message' => '保存成功']);
+            }else{
+                return response() -> json(['status' => 1 , 'message' => '保存失败']);
+            }
+
         }
 
 
