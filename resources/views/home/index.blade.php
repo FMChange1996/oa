@@ -44,14 +44,14 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6b8;</i>
-                    <cite>会员管理</cite>
+                    <cite>客户管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
                         <a _href="{{url('home/member_list')}}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员列表</cite>
+                            <cite>客户列表</cite>
 
                         </a>
                     </li >

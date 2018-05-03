@@ -107,7 +107,26 @@ class MemberController extends Controller
     public function edit_member(Request $request)
     {
         $data = $request->all();
-        var_dump($data);
+        $message = [
+            'mail.email' => '邮箱格式不正确',
+            'mobile.required' => '手机号不能为空',
+            'mobile.min' => '手机号格式不正确',
+            'mobile.max' => '手机号格式不正确',
+            'address.required' => '地址不能为空'
+        ];
+        if ($data['mail'] == null){
+            $validate = Validator::make($data,[
+                ''
+            ],$message);
+        }else{
+            $validate = Validator::make($data,[
+                ''
+            ],$message);
+        }
+
+
+
+
 
     }
 }
