@@ -17,11 +17,11 @@ class MemberController extends Controller
         return view('home/member/member_list', ['title' => '客户列表', 'table' => $table, 'count' => $table->count()]);
     }
 
-    //渲染客户删除模板
+    //渲染已删除客户列表
     public function member_del()
     {
         $table = MemberModel::onlyTrashed() -> get();
-        return view('home/member/member_del');
+        return view('home/member/member_del', ['title' => '客户删除列表', 'table' => $table, 'count' => $table->count()]);
     }
 
     //渲染客户添加模板
@@ -162,9 +162,52 @@ class MemberController extends Controller
         }
     }
 
-    //渲染已删除客户列表
-    public function deleted_list()
+    //强制删除
+    public function deleted_member(Request $request)
     {
+        $data = $request->all();
+        $find = MemberModel::withTrashed()->where('id', $data['id']);
+        if ($find->forceDelete()) {
+            return response()->json(['code' => 200, 'message' => '删除成功']);
+        } else {
+            return response()->json(['code' => 500, 'message' => '删除失败']);
+        }
 
+    }
+
+    //恢复已删除的客户
+    public function rec_member(Request $request)
+    {
+        $data = $request->all();
+        $find = MemberModel::withTrashed()->where('id', $data['id']);
+        if ($find->restore()) {
+            return response()->json(['code' => 200, 'message' => '恢复成功']);
+        } else {
+            return response()->json(['code' => 500, 'message' => '恢复失败']);
+        }
+
+    }
+
+    //恢复所有被删除的客户
+    public function recovery_all(Request $request)
+    {
+        $data = $request->all();
+        if ($data['code'] == 200) {
+            $recovery = MemberModel::withTrashed();
+            if ($recovery->restore()) {
+                return response()->json(['code' => 200, 'message' => '全部恢复成功']);
+            } else {
+                return response()->json(['code' => 500, 'message' => '恢复失败']);
+            }
+        }
+
+    }
+
+    //再已删除的客户中筛选
+    public function seach_name(Request $request)
+    {
+        $data = $request->all();
+        $table = MemberModel::where('username', $data['seach_name'])->get();
+        return view('home/member/member_del', ['title' => '客户删除列表', 'table' => $table, 'count' => $table->count()]);
     }
 }

@@ -58,7 +58,7 @@
                     <li>
                         <a _href="{{url('home/member_del')}}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>会员删除</cite>
+                            <cite>客户删除</cite>
 
                         </a>
                     </li>
