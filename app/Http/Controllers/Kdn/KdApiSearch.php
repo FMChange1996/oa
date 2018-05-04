@@ -9,8 +9,6 @@ defined('ReqURL') or define('ReqURL', 'http://api.kdniao.cc/Ebusiness/EbusinessO
 //调用查询物流轨迹
 //---------------------------------------------
 
-$logisticResult=getOrderTracesByJson();
-echo logisticResult;
 
 //---------------------------------------------
  
