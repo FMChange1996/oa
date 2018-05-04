@@ -81,83 +81,56 @@
             </li>
             <li>
                 <a href="javascript:;">
+                    <i class="iconfont">&#xe724;</i>
+                    <cite>售后管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{url('home/order_list')}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>售后列表</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6cb;</i>
+                    <cite>快递管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{url('home/search_num')}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>物流查询</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
                     <i class="iconfont">&#xe726;</i>
                     <cite>用户中心</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     @if(Session::get('username') == 'admin')
-                    <li>
-                        <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>管理员列表</cite>
-                        </a>
-                    </li >
+                        <li>
+                            <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>管理员列表</cite>
+                            </a>
+                        </li >
                     @else
-                    <li>
-                        <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>修改密码</cite>
-                        </a>
-                    </li >
+                        <li>
+                            <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>修改密码</cite>
+                            </a>
+                        </li >
                     @endif
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:;">
-                    <i class="iconfont">&#xe6ce;</i>
-                    <cite>系统统计</cite>
-                    <i class="iconfont nav_right">&#xe697;</i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a _href="echarts1.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>拆线图</cite>
-                        </a>
-                    </li >
-                    <li>
-                        <a _href="echarts2.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>柱状图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts3.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>地图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts4.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>饼图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts5.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>雷达图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts6.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>k线图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts7.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>热力图</cite>
-                        </a>
-                    </li>
-                    <li>
-                        <a _href="echarts8.html">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>仪表图</cite>
-                        </a>
-                    </li>
                 </ul>
             </li>
         </ul>
