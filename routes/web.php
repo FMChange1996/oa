@@ -53,6 +53,7 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     //OrderController
     Route::get('home/order_list', 'OrderController@order_list');
     Route::get('home/order_add', 'OrderController@order_add');
+
     //ExpressController
 
 });
