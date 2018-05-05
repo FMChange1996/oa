@@ -63,20 +63,21 @@
         </tr>
         </thead>
         <tbody>
+        @foreach($table as $table)
         <tr>
-            <td>1</td>
-            <td>2017009171822298053</td>
-            <td>老王</td>
-            <td>18925139194</td>
-            <td>浙江</td>
-            <td>B-37</td>
-            <td>待确认</td>
-            <td>1350</td>
-            <td>未发货</td>
-            <td>其他方式</td>
-            <td>申通物流</td>
-            <td>1202559026395</td>
-            <td>2017-08-17 18:22</td>
+            <td>{{$table -> id}}</td>
+            <td>{{$table -> order_id}}</td>
+            <td>{{$table -> name}}</td>
+            <td>{{$table -> mobile}}</td>
+            <td>{{$table -> address}}</td>
+            <td>{{$table -> goods}}</td>
+            <td>{{$table -> order_status}}</td>
+            <td>{{$table -> order_money}}</td>
+            <td>{{$table -> send_status}}</td>
+            <td>{{$table -> order_pay}}</td>
+            <td>{{$table -> shipping}}</td>
+            <td>{{$table -> shiping_num}}</td>
+            <td>{{date("Y/m/d H:i:s",$table -> create_at)}}</td>
             <td class="td-manage">
                 <a title="查看" onclick="x_admin_show('编辑','{{url('home/order_edit')}}')" href="javascript:;">
                     <i class="layui-icon">&#xe63c;</i>
@@ -86,6 +87,7 @@
                 </a>
             </td>
         </tr>
+        @endforeach
         </tbody>
     </table>
 </div>

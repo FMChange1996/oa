@@ -14,7 +14,8 @@ class OrderController extends Controller
     //渲染订单列表模板
     public function order_list()
     {
-        return view('home/order/order_list', ['title' => '订单列表']);
+        $table = OrderModel::all();
+        return view('home/order/order_list', ['title' => '订单列表', 'table' => $table]);
     }
 
     //渲染订单添加模板
@@ -54,7 +55,7 @@ class OrderController extends Controller
                 'goods' => $data['goods'],
                 'order_pay' => $data['order_pay'],
                 'shipping' => $data['shipping'],
-                'created_at' => time()
+                'create_at' => time()
             ];
             $response = OrderModel::insert($datas);
             if ($response == true) {
