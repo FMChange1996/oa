@@ -28,7 +28,7 @@ class ExpressController extends Controller
 //
 //    }
 
-
+    //渲染物流记录查询页面
     public function search_num()
     {
         return view('home/express/seach');

@@ -49,13 +49,15 @@
             <th>序号</th>
             <th>订单编号</th>
             <th>收货人</th>
-            <th>总金额</th>
-            <th>应付金额</th>
+            <th>手机号</th>
+            <th>收件地址</th>
+            <th>购买物品</th>
             <th>订单状态</th>
-            <th>支付状态</th>
+            <th>支付金额</th>
             <th>发货状态</th>
             <th>支付方式</th>
             <th>配送方式</th>
+            <th>物流单号</th>
             <th>下单时间</th>
             <th >操作</th>
         </tr>
@@ -64,14 +66,16 @@
         <tr>
             <td>1</td>
             <td>2017009171822298053</td>
-            <td>老王:18925139194</td>
-            <td>7829.10</td>
-            <td>7854.10</td>
+            <td>老王</td>
+            <td>18925139194</td>
+            <td>浙江</td>
+            <td>B-37</td>
             <td>待确认</td>
-            <td>未支付</td>
+            <td>1350</td>
             <td>未发货</td>
             <td>其他方式</td>
             <td>申通物流</td>
+            <td>1202559026395</td>
             <td>2017-08-17 18:22</td>
             <td class="td-manage">
                 <a title="查看" onclick="x_admin_show('编辑','{{url('home/order_edit')}}')" href="javascript:;">
