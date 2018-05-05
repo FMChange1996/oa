@@ -10,7 +10,7 @@ class OrderController extends Controller
     //渲染订单列表模板
     public function order_list()
     {
-        return view('home/order/order_list');
+        return view('home/order/order_list', ['title' => '订单列表']);
     }
 
     //渲染订单添加模板

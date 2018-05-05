@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.0</title>
+    <title>{{$title}}</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -34,34 +34,6 @@
 <div class="x-body">
     <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-            <input class="layui-input" placeholder="开始日" name="start" id="start">
-            <input class="layui-input" placeholder="截止日" name="end" id="end">
-            <div class="layui-input-inline">
-                <select name="contrller">
-                    <option>支付状态</option>
-                    <option>已支付</option>
-                    <option>未支付</option>
-                </select>
-            </div>
-            <div class="layui-input-inline">
-                <select name="contrller">
-                    <option>支付方式</option>
-                    <option>支付宝</option>
-                    <option>微信</option>
-                    <option>货到付款</option>
-                </select>
-            </div>
-            <div class="layui-input-inline">
-                <select name="contrller">
-                    <option value="">订单状态</option>
-                    <option value="0">待确认</option>
-                    <option value="1">已确认</option>
-                    <option value="2">已收货</option>
-                    <option value="3">已取消</option>
-                    <option value="4">已完成</option>
-                    <option value="5">已作废</option>
-                </select>
-            </div>
             <input type="text" name="username"  placeholder="请输入订单号" autocomplete="off" class="layui-input">
             <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -74,9 +46,7 @@
     <table class="layui-table">
         <thead>
         <tr>
-            <th>
-                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
+            <th>序号</th>
             <th>订单编号</th>
             <th>收货人</th>
             <th>总金额</th>
@@ -92,9 +62,7 @@
         </thead>
         <tbody>
         <tr>
-            <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
+            <td>1</td>
             <td>2017009171822298053</td>
             <td>老王:18925139194</td>
             <td>7829.10</td>
@@ -106,7 +74,7 @@
             <td>申通物流</td>
             <td>2017-08-17 18:22</td>
             <td class="td-manage">
-                <a title="查看"  onclick="x_admin_show('编辑','order-view.html')" href="javascript:;">
+                <a title="查看" onclick="x_admin_show('编辑','{{url('home/order_edit')}}')" href="javascript:;">
                     <i class="layui-icon">&#xe63c;</i>
                 </a>
                 <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
@@ -116,17 +84,6 @@
         </tr>
         </tbody>
     </table>
-    <div class="page">
-        <div>
-            <a class="prev" href="">&lt;&lt;</a>
-            <a class="num" href="">1</a>
-            <span class="current">2</span>
-            <a class="num" href="">3</a>
-            <a class="num" href="">489</a>
-            <a class="next" href="">&gt;&gt;</a>
-        </div>
-    </div>
-
 </div>
 <script>
     layui.use('laydate', function(){
