@@ -25,7 +25,7 @@ class OrderModel extends Model
         return strtotime(parent::fromDateTime($value));
     }
 
-    protected function getOrder_payAttr($value)
+    public function getOrder_payAttr($value)
     {
         $order_pay = [
             0 => '未确认',
