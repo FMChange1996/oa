@@ -29,7 +29,7 @@
           <cite>售后列表</cite></a>
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
-       href="javascript:location.replace(location.href = '{{url('home/member_list')}}');" title="刷新">
+       href="javascript:location.replace(location.href = '{{url('home/customer_list')}}');" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">

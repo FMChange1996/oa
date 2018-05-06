@@ -62,5 +62,5 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     //ExpressController
     Route::get('home/search_num', 'ExpressController@search_num');
     //CustomerContirller
-    Route::get('home/customer_list','CustomerController@custmer_list');
+    Route::get('home/customer_list', 'CustomerController@customer_list');
 });
