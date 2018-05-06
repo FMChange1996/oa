@@ -57,6 +57,7 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::post('home/add_order', 'OrderController@add_order');
     Route::post('home/del_order', 'OrderController@del_order');
     Route::post('home/send_goods', 'OrderController@send_goods');
+    Route::post('home/update_order', 'OrderController@update_order');
     Route::get('/home/express_serch/number={number}', 'ExpressController@seach');
     //ExpressController
     Route::get('home/search_num', 'ExpressController@search_num');

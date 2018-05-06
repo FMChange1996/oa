@@ -87,7 +87,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="{{url('home/order_list')}}">
+                        <a _href="{{url('home/customer_list')}}">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>售后列表</cite>
                         </a>

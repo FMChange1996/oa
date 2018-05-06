@@ -7,10 +7,14 @@
 快递公司：{{$shippername}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;快递单号：{{$number}}
 <br>
 <br>
-@foreach($table as $table)
-    {{$table -> AcceptTime}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$table -> AcceptStation}}
-    <br>
-@endforeach
+@if($table == null)
+    暂未查询到物流信息
+@else
+    @foreach($table as $table)
+        {{$table -> AcceptTime}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$table -> AcceptStation}}
+        <br>
+    @endforeach
+@endif
 
 
 </body>

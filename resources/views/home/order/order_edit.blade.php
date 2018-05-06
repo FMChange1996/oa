@@ -29,7 +29,7 @@
                 <span class="x-red">*</span>订单编号
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" value="{{$table -> order_id}}"
+                <input type="text" id="order_id" name="order_id" value="{{$table -> order_id}}"
                        autocomplete="off" class="layui-input" disabled="disabled">
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <span class="x-red">*</span>收件人
             </label>
             <div class="layui-input-inline">
-                <input class="layui-input" type="text" value="{{$table -> name}}">
+                <input class="layui-input" type="text" id="name" name="name" value="{{$table -> name}}">
             </div>
         </div>
         <div class="layui-form-item">
@@ -82,13 +82,13 @@
         $('#edit').on('click', function (event) {
             $.ajax({
                 type: 'POST',
-                url: '{{url('home/edit_order')}}',
+                url: '{{url('home/update_order')}}',
                 data: $('#edit_order').serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status == 0) {
+                    if (response.code == 200) {
                         layer.msg(response.message, {
-                            icon: 6, time: 600, end: function () {
+                            icon: 6, time: 800, end: function () {
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
                                 window.parent.location.replace("{{url('home/order_list')}}");

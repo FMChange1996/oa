@@ -54,6 +54,7 @@ class OrderController extends Controller
                 'name' => $data['name'],
                 'mobile' => $data['mobile'],
                 'address' => $data['address'],
+                'order_status' => 0,
                 'goods' => $data['goods'],
                 'order_pay' => $data['order_pay'],
                 'order_money' => $data['order_money'],
@@ -93,25 +94,61 @@ class OrderController extends Controller
     {
         $data = $request->all();
         $message = [
-            'order_id.required' => '订单号不能为空',
+            'id.required' => '订单号不能为空',
             'shipping_num.required' => '快递单号不能为空'
         ];
         $validate = Validator::make($data, [
-            'order_id' => 'required',
+            'id' => 'required',
             'shipping_num' => 'required'
         ], $message);
         if ($validate->fails()) {
-            return reponse()->json(['code' => 500, 'message' => $validate->errors()->first()]);
+            return response()->json(['code' => 500, 'message' => $validate->errors()->first()]);
         } else {
-            $find = OrderModel::find($data['order_id']);
+            $find = OrderModel::find($data['id']);
             $find->shipping_num = $data['shipping_num'];
             $find->order_status = 1;
             if ($find->save()) {
-                return reponse()->json(['code' => 200, 'message' => '发货成功']);
+                return response()->json(['code' => 200, 'message' => '发货成功']);
             } else {
-                return reponse()->json(['code' => 500, 'message' => '发货失败']);
+                return response()->json(['code' => 500, 'message' => '发货失败']);
             }
         }
 
+    }
+
+    //更改订单信息到数据库
+    public function update_order(Request $request)
+    {
+        $data = $request->all();
+        $message = [
+            'name.required' => '收件人不能为空',
+            'mobile.required' => '手机号不能为空',
+            'mobile.min' => '手机号格式不正确',
+            'mobile.max' => '手机号格式不正确',
+            'address.required' => '地址不能为空',
+            'goods.required' => '购买清单不能为空',
+        ];
+        $validate = Validator::make($data, [
+            'name' => 'required',
+            'mobile' => 'required|min:11|max:12',
+            'address' => 'required',
+            'goods' => 'required'
+        ], $message);
+
+
+        if ($validate->fails()) {
+            return response()->json(['code' => 500, 'message' => $validate->errors()->first()]);
+        } else {
+            $find = OrderModel::find($data['id']);
+            $find->name = $data['name'];
+            $find->mobile = $data['mobile'];
+            $find->address = $data['address'];
+            $find->goods = $data['goods'];
+            if ($find->save()) {
+                return response()->json(['code' => 200, 'message' => '更新成功']);
+            } else {
+                return response()->json(['code' => 500, 'message' => '更新失败']);
+            }
+        }
     }
 }

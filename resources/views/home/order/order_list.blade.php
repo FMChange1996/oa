@@ -26,7 +26,7 @@
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="{{url('home/index')}}">首页</a>
-        <a href="javascript">订单管理</a>
+        <a href="javascript::">订单管理</a>
         <a>
           <cite>订单列表</cite></a>
       </span>
@@ -72,7 +72,7 @@
             <td>{{$table -> order_money}}</td>
             <td>{{$table -> order_pay}}</td>
             @if($table -> shipping_num == null)
-                <td><a onclick="send(this,'{{$table -> order_id}}')">发货</a></td>
+                <td><a onclick="send(this,'{{$table -> id}}')">发货</a></td>
             @else
                 <td>
                     <a onclick="x_admin_show('{{$table -> shipping_num}}','{{url('home/express_serch/number='.$table -> shipping_num)}}')">{{$table -> shipping_num}}</a>
@@ -98,6 +98,7 @@
     //发货
     function send(obj, id) {
         layer.prompt({'title': '请输入快递单号'}, function (val, index) {
+            layer.close(index);
             $.ajaxSetup({
                 headers: {'X-CSRF-TOKEN': '{{csrf_token()}}'}
             });
@@ -105,20 +106,18 @@
                 type: 'POST',
                 url: '{{url('home/send_goods')}}',
                 data: {
-                    order_id: id,
+                    id: id,
                     shipping_num: val
                 },
                 dataType: 'json',
                 success: function (response) {
                     if (response.code == 200) {
-                        layer.close(index);
                         layer.msg(response.messasge, {
                             icon: 6, time: 600, end: function () {
-                                location.href = '{{url('home.order_list')}}'
+                                location.href = '{{url('home/order_list')}}'
                             }
                         });
                     } else {
-                        layer.close(index);
                         layer.msg(response.messasge, {icon: 5, time: 1000});
                     }
                 }
