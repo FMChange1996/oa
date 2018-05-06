@@ -69,7 +69,6 @@
                 <td>{{$table -> context}}</td>
                 <td>{{$table -> status}}</td>
                 <td>{{date("Y/m/d H:i:s",$table -> create_at)}}</td>
-
             <td class="td-manage">
                 @if($table -> status == 0)
                 <a title="编辑" onclick="x_admin_show('编辑','{{url('home/customer_edit/id='.$table -> id)}}',600,400)"
@@ -86,8 +85,6 @@
                 </a>
                 @endif
             </td>
-
-
         </tr>
         @endforeach
         </tbody>

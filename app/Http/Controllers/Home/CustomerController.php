@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\CustomerModel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -17,7 +18,8 @@ class CustomerController extends Controller
 
     public function customer_edit($id)
     {
-
+        $table = CustomerModel::find($id);
+        return view('home/customer/customer_edit',['title' => '编辑售后订单' , 'table' => $table]);
     }
 
     //渲染添加售后订单模板
@@ -40,4 +42,42 @@ class CustomerController extends Controller
 
     }
 
+    //添加售后订单
+    public function add_member(Request $request)
+    {
+        $data = $request -> all();
+        $message = [
+            'name.required' => '客户名字不能为空',
+            'mobile.required' => '手机号不能为空',
+            'mobile.min' => '手机号格式不正确',
+            'mobile.max' => '手机号格式不正确',
+            'address.required' => '地址不能为空',
+            'context.required' => '售后内容不能为空'
+        ];
+        $validate = Validator::make($data,[
+            'name' => 'required',
+            'mobile' => 'required|min:11|max:12',
+            'address' => 'required',
+            'context' => 'required'
+        ],$message);
+
+        if ($validate -> fails()){
+            return response() -> json(['code' => 500 , 'message' => $validate -> errors() -> first()]);
+        }else{
+            $insert = CustomerModel::insert([
+                'customer_id' => 'SH'.date('YmdHis') . rand(10000, 99999),
+                'name' => $data['name'],
+                'mobile' => $data['data'],
+                'address' => $data['address'],
+                'context' => $data['context'],
+                'status' => 0,
+                'create_at' => time()
+            ]);
+            if ($insert == true){
+                return response() -> json(['code' => 200 , 'message' => '添加成功']);
+            }else{
+                return response() -> json(['code' => 500 , 'message' => '添加失败']);
+            }
+        }
+    }
 }

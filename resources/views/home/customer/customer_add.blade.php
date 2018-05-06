@@ -26,23 +26,11 @@
     <form class="layui-form" id="form" name="form">
         <div class="layui-form-item">
             <label for="username" class="layui-form-label">
-                <span class="x-red">*</span>名字
+                <span class="x-red">*</span>客户姓名
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="username" name="username"
                        autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="sex" class="layui-form-label">
-                <span class="x-red">*</span>性别
-            </label>
-            <div class="layui-input-inline">
-                <select name="sex">
-                    <option value="">请选择</option>
-                    <option value="0">男</option>
-                    <option value="1">女</option>
-                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -56,29 +44,24 @@
         </div>
         <div class="layui-form-item">
             <label for="mail" class="layui-form-label">
-                邮箱号
+                <span class="x-red">*</span>地址
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="mail" name="mail"
-                       autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                可空
+                <textarea name="address" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label for="address" class="layui-form-label">
-                <span class="x-red">*</span>地址
+                <span class="x-red">*</span>售后内容
             </label>
             <div class="layui-input-inline">
-                <textarea name="address" placeholder="请输入地址" class="layui-textarea"></textarea>
+                <textarea name="coutext" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label for="submit" class="layui-form-label">
             </label>
-            <input type="hidden" name="create_at" value="{{time()}}">
-            <input type="button" id="member_add" value="增加客户" class="layui-btn">
+            <input type="button" id="member_add" value="添加" class="layui-btn">
         </div>
     </form>
 </div>
@@ -94,7 +77,7 @@
                 data: $('#form').serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status == 0) {
+                    if (response.code == 200) {
                         layer.msg(reponse.message, {
                             icon: 6, time: 500, end: function () {
                                 var index = parent.layer.getFrameIndex(window.name);
