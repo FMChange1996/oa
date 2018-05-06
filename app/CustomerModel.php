@@ -15,4 +15,13 @@ class CustomerModel extends Model
 
     //绑定主键
     protected $primaryKey = 'id';
+
+    public function getStatusAttribute($value)
+    {
+        $status = [
+            0 => '未完结',
+            1 => '已完结'
+        ];
+        return $status[$value];
+    }
 }
