@@ -17,7 +17,7 @@ class MemberModel extends Model
     protected $primaryKey = 'id';
 
     //设置软删除时间
-    protected $dates = ['delete_at'];
+    protected $dates = ['deleted_at'];
 
     //设置日期显示格式
     public function fromDateTime($value)

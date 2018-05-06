@@ -16,6 +16,8 @@ class CustomerModel extends Model
     //绑定主键
     protected $primaryKey = 'id';
 
+    protected $dates = ['deleted_at'];
+
     public function getStatusAttribute($value)
     {
         $status = [
