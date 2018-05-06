@@ -15,13 +15,13 @@ class OrderController extends Controller
     public function order_list()
     {
         $table = OrderModel::all();
-        return view('home/order/order_list', ['title' => '订单列表', 'table' => $table]);
+        return view('home/order/order_list', ['title' => '订单列表', 'table' => $table, 'count' => $table->count()]);
     }
 
     //渲染订单添加模板
     public function order_add()
     {
-        return view('home/order/order_add');
+        return view('home/order/order_add', ['title' => '添加订单']);
     }
 
     //添加订单到数据库
@@ -48,7 +48,7 @@ class OrderController extends Controller
             return response()->json(['code' => 500, 'message' => $validate->errors()->first()]);
         } else {
             $datas = [
-                'order_id' => date('YmdHis') . rand(10000000, 99999999),
+                'order_id' => date('YmdHis') . rand(10000, 99999),
                 'name' => $data['name'],
                 'mobile' => $data['mobile'],
                 'address' => $data['address'],
@@ -63,6 +63,16 @@ class OrderController extends Controller
             } else {
                 return response()->json(['code' => 500, 'message' => '添加失败']);
             }
+        }
+    }
+
+    //使用软删除方式删除订单
+    public function del_order(Request $request)
+    {
+        $data = $request->all();
+        $find = OrderModel::find($data['id']);
+        if ($find->delete()) {
+
         }
     }
 

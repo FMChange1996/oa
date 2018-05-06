@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.0</title>
+    <title>{{$title}}</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -63,14 +63,6 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="username" class="layui-form-label">
-                配送物流
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input" name="shipping" id="shipping" autocomplete="off">
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label for="desc" class="layui-form-label">
                 <span class="x-red">*</span>购买物品
             </label>
@@ -97,7 +89,7 @@
                 data: $('#order').serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    if (responde.code == 200) {
+                    if (response.code == 200) {
                         layer.msg(response.message, {
                             icon: 6, time: 600, end: function () {
                                 var index = parent.layer.getFrameIndex(window.name);

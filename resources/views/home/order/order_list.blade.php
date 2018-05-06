@@ -41,7 +41,7 @@
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加订单','{{url('home/order_add')}}')"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span class="x-right" style="line-height:40px">共有数据：{{$count}} 条</span>
     </xblock>
     <table class="layui-table">
         <thead>
@@ -74,7 +74,13 @@
             <td>{{$table -> order_status}}</td>
             <td>{{$table -> order_money}}</td>
             <td>{{$table -> send_status}}</td>
-            <td>{{$table -> order_pay}}</td>
+            @if($table -> order_pay == 0)
+                <td>支付宝</td>
+            @elseif($table -> order_pay == 1)
+                <td>微信支付</td>
+            @else
+                <td>货到付款</td>
+            @endif
             <td>{{$table -> shipping}}</td>
             <td>{{$table -> shiping_num}}</td>
             <td>{{date("Y/m/d H:i:s",$table -> create_at)}}</td>
@@ -82,7 +88,7 @@
                 <a title="查看" onclick="x_admin_show('编辑','{{url('home/order_edit')}}')" href="javascript:;">
                     <i class="layui-icon">&#xe63c;</i>
                 </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                <a title="删除" onclick="member_del(this,'{{$table -> id}}')" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
@@ -132,10 +138,34 @@
 
     /*用户-删除*/
     function member_del(obj,id){
-        layer.confirm('确认要删除吗？',function(index){
-            //发异步删除数据
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
+        layer.confirm('确认要删除吗？', {
+            btn: ['确认', '取消'],
+            btn1: function (index, layero) {
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': '{{csrf_token()}}'}
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url('')}}',
+                    data: {
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.code == 200) {
+                            layer.msg(response.message, {
+                                icon: 6, time: 600, end: function () {
+                                    layer.close(index);
+                                    location.href = "{{url('home/order_list')}}"
+                                }
+                            })
+                        } else {
+                            layer.msg(response.message, {icon: 5, time: 1000});
+                        }
+                    }
+
+                })
+            }
         });
     }
 
@@ -152,12 +182,6 @@
         });
     }
 </script>
-<script>var _hmt = _hmt || []; (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();</script>
 </body>
 
 </html>
