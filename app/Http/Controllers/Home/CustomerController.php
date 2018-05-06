@@ -16,6 +16,7 @@ class CustomerController extends Controller
         return view('home/customer/customer_list', ['title' => '售后列表', 'table' => $table, 'count' => $table->count()]);
     }
 
+    //渲染售后订单编辑模板
     public function customer_edit($id)
     {
         $table = CustomerModel::find($id);
