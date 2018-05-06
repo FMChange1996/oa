@@ -66,5 +66,6 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('home/customer_edit/id={id}', 'CustomerController@customer_edit');
     Route::get('home/customer_add', 'CustomerController@customer_add');
     Route::post('home/del_customer', 'CustomerController@del_customer');
-    Route::post('home/add_member','CustomerController@add_member');
+    Route::post('home/add_customer','CustomerController@add_customer');
+    Route::post('home/update_customer','CustomerController@update_customer');
 });

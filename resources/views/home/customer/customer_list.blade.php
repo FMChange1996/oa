@@ -70,7 +70,7 @@
                 <td>{{$table -> status}}</td>
                 <td>{{date("Y/m/d H:i:s",$table -> create_at)}}</td>
             <td class="td-manage">
-                @if($table -> status == 0)
+                @if($table -> status == '未完结')
                 <a title="编辑" onclick="x_admin_show('编辑','{{url('home/customer_edit/id='.$table -> id)}}',600,400)"
                    href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
@@ -79,10 +79,7 @@
                     <i class="layui-icon">&#xe640;</i>
                 </a>
                 @else
-                <a title="编辑" onclick="x_admin_show('编辑','{{url('home/customer_edit/id='.$table -> id)}}',600,400)"
-                   href="javascript:;">
-                    <i class="layui-icon">&#xe642;</i>
-                </a>
+                    不可编辑
                 @endif
             </td>
         </tr>

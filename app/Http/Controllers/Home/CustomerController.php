@@ -44,7 +44,7 @@ class CustomerController extends Controller
     }
 
     //添加售后订单
-    public function add_member(Request $request)
+    public function add_customer(Request $request)
     {
         $data = $request -> all();
         $message = [
@@ -78,6 +78,34 @@ class CustomerController extends Controller
                 return response() -> json(['code' => 200 , 'message' => '添加成功']);
             }else{
                 return response() -> json(['code' => 500 , 'message' => '添加失败']);
+            }
+        }
+    }
+
+    //更新售后订单信息
+    public function update_customer(Request $request)
+    {
+        $data = $request -> all();
+        $message = [
+            'context.required' => '售后内容不能为空',
+            'status.required' => '售后状态不能为空'
+        ];
+
+        $validate = Validator::make($data,[
+            'context' => 'required',
+            'status' => 'required'
+        ],$message);
+
+        if ($validate -> fails()){
+            return response() -> json(['code' => 500 ,'message' => $validate -> errors() -> first()]);
+        }else{
+            $find = CustomerModel::find($data['id']);
+            $find -> context = $data['context'];
+            $find -> status = $data['status'];
+            if ($find ->save()){
+                return response() -> json(['code' => 200 , 'message' => '更新成功']);
+            }else{
+                return response() -> json(['code' => 500 , 'message' => '更新失败']);
             }
         }
     }

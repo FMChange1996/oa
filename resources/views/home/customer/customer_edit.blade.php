@@ -25,6 +25,15 @@
 <div class="x-body">
     <form class="layui-form" name="edit" id="edit_member">
         <div class="layui-form-item">
+            <label for="customer_id" class="layui-form-label">
+                <span class="x-red">*</span>售后编号
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="customer_id" name="customer_id" value="{{$table -> customer_id}}"
+                       autocomplete="off" class="layui-input" disabled="disabled">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label for="username" class="layui-form-label">
                 <span class="x-red">*</span>客户姓名
             </label>
@@ -39,7 +48,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="trext" id="mobile" name="mobile" value="{{$table -> mobile}}"
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" disabled="disabled">
             </div>
         </div>
         <div class="layui-form-item">
@@ -47,7 +56,7 @@
                 <span class="x-red">*</span>地址
             </label>
             <div class="layui-input-inline">
-                <textarea class="layui-textarea" name="address" placeholder="请输入地址">{{$table -> address}}</textarea>
+                <textarea class="layui-textarea" name="address" placeholder="请输入地址" disabled="disabled">{{$table -> address}}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -55,7 +64,22 @@
                 <span class="x-red">*</span>售后内容
             </label>
             <div class="layui-input-inline">
-                <textarea class="layui-textarea" name="context" placeholder="请输入地址">{{$table -> context}}</textarea>
+                <textarea class="layui-textarea" name="context">{{$table -> context}}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="address" class="layui-form-label">
+                <span class="x-red">*</span>售后状态
+            </label>
+            <div class="layui-input-inline">
+                <select name="status">
+                    @if($table -> status == 0)
+                    <option value="0">未完结</option>
+                    <option value="1">已完结</option>
+                    @else
+                    <option disabled>已完结</option>
+                    @endif
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -74,15 +98,15 @@
         $('#edit').on('click', function (event) {
             $.ajax({
                 type: 'POST',
-                url: '{{url('home/edit_member')}}',
+                url: '{{url('home/update_customer')}}',
                 data: $('#edit_member').serialize(),
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status == 0) {
+                    if (response.code == 200) {
                         layer.msg(response.message,{icon:6,time:600,end:function () {
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
-                                window.parent.location.replace("{{url('home/member_list')}}");
+                                window.parent.location.replace("{{url('home/customer_list')}}");
                             }})
                     } else {
                         layer.msg(response.message,{icon:5,time:1000});
