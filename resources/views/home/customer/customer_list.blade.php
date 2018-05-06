@@ -103,7 +103,8 @@
                     dataType:'json',
                     success:function (response) {
                         if (response.code == 200){
-                            layer.msg('已删除',{icon:6,time:600,end:function () {
+                            layer.msg('已删除', {
+                                icon: 6, time: 800, end: function () {
                                     layer.close(index);
                                     location.href = '{{url('home/member_list')}}';
                                 }})
