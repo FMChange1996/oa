@@ -66,9 +66,9 @@ class CustomerController extends Controller
             return response() -> json(['code' => 500 , 'message' => $validate -> errors() -> first()]);
         }else{
             $insert = CustomerModel::insert([
-                'customer_id' => 'SH'.date('YmdHis') . rand(10000, 99999),
+                'customer_id' => date('YmdHis') . rand(10000, 99999),
                 'name' => $data['name'],
-                'mobile' => $data['data'],
+                'mobile' => $data['mobile'],
                 'address' => $data['address'],
                 'context' => $data['context'],
                 'status' => 0,

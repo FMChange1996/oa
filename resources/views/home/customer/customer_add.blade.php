@@ -29,7 +29,7 @@
                 <span class="x-red">*</span>客户姓名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username"
+                <input type="text" id="name" name="name"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -55,7 +55,7 @@
                 <span class="x-red">*</span>售后内容
             </label>
             <div class="layui-input-inline">
-                <textarea name="coutext" class="layui-textarea"></textarea>
+                <textarea name="context" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -78,7 +78,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.code == 200) {
-                        layer.msg(reponse.message, {
+                        layer.msg(response.message, {
                             icon: 6, time: 500, end: function () {
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);

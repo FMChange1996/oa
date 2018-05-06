@@ -26,25 +26,11 @@
     <form class="layui-form" name="edit" id="edit_member">
         <div class="layui-form-item">
             <label for="username" class="layui-form-label">
-                <span class="x-red">*</span>名字
+                <span class="x-red">*</span>客户姓名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" value="{{$table -> username}}"
+                <input type="text" id="username" name="username" value="{{$table -> name}}"
                        autocomplete="off" class="layui-input" disabled="disabled">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="sex" class="layui-form-label">
-                <span class="x-red">*</span>性别
-            </label>
-            <div class="layui-input-inline">
-                <select name="sex">
-                    @if($table -> sex == 0)
-                        <option value="0">男</option>
-                    @else
-                        <option value="1">女</option>
-                    @endif
-                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -57,23 +43,19 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="mail" class="layui-form-label">
-                邮箱
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="mail" name="mail" value="{{$table -> mail}}"
-                       autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                可空
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label for="address" class="layui-form-label">
                 <span class="x-red">*</span>地址
             </label>
             <div class="layui-input-inline">
                 <textarea class="layui-textarea" name="address" placeholder="请输入地址">{{$table -> address}}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="address" class="layui-form-label">
+                <span class="x-red">*</span>售后内容
+            </label>
+            <div class="layui-input-inline">
+                <textarea class="layui-textarea" name="context" placeholder="请输入地址">{{$table -> context}}</textarea>
             </div>
         </div>
         <div class="layui-form-item">

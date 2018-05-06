@@ -112,7 +112,7 @@
                             layer.msg('已删除', {
                                 icon: 6, time: 800, end: function () {
                                     layer.close(index);
-                                    location.href = '{{url('home/member_list')}}';
+                                    location.href = '{{url('home/customer_list')}}';
                                 }})
                         } else{
                             layer.msg('删除失败',{icon:5,time:1000});
