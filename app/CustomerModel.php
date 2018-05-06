@@ -12,4 +12,7 @@ class CustomerModel extends Model
 
     //绑定表
     protected $table = 'customer';
+
+    //绑定主键
+    protected $primaryKey = 'id';
 }

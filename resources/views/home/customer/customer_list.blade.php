@@ -35,14 +35,14 @@
 <div class="x-body">
     <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" id="seach_member" name="seach_member" method="get"
-              action="{{url('home/seach_user')}}">
+        >
             <input type="text" name="seach_user" id="seach_user" placeholder="请输入用户名" autocomplete="off"
                    class="layui-input">
             <button class="layui-btn" id="seach"><i class="layui-icon">&#xe615;</i></button>
         </form>
     </div>
     <xblock>
-        <button class="layui-btn" onclick="x_admin_show('添加客户','{{url('home/member_add')}}',600,400)"><i
+        <button class="layui-btn" onclick="x_admin_show('添加售后订单','{{url('home/customer_add')}}',600,400)"><i
                     class="layui-icon"></i>添加
         </button>
         <span class="x-right" style="line-height:40px">共有数据：{{$count}} 条</span>
@@ -50,7 +50,6 @@
     <table class="layui-table">
         <thead>
         <tr>
-            <th>ID</th>
             <th>售后编号</th>
             <th>客户姓名</th>
             <th>客户手机</th>
@@ -64,7 +63,6 @@
         <tbody>
         <tr>
             @foreach($table as $table)
-                <td>{{$table -> id}}</td>
                 <td>{{$table -> customer_id}}</td>
                 <td>{{$table -> name}}</td>
                 <td>{{$table -> mobile}}</td>
@@ -73,7 +71,7 @@
                 <td>{{$table -> status}}</td>
                 <td>{{date("Y/m/d H:i:s",$table -> create_at)}}</td>
             <td class="td-manage">
-                <a title="编辑" onclick="x_admin_show('编辑','{{url('home/member_edit/id='.$table -> id)}}',600,400)"
+                <a title="编辑" onclick="x_admin_show('编辑','{{url('home/customer_edit/id='.$table -> id)}}',600,400)"
                    href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
@@ -98,7 +96,7 @@
                 });
                 $.ajax({
                     type:'POST',
-                    url:'{{url('home/del_member')}}',
+                    url: '{{url('home/del_customer')}}',
                     data:{
                         id:id
                     },
