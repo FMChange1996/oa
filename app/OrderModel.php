@@ -25,12 +25,34 @@ class OrderModel extends Model
         return strtotime(parent::fromDateTime($value));
     }
 
-    public function getOrder_payAttr($value)
+    public function getOrderPayAttribute($value)
     {
         $order_pay = [
-            0 => '未确认',
-            1 => '已确认'
+            0 => '支付宝',
+            1 => '微信',
+            3 => '货到付款'
         ];
         return $order_pay[$value];
     }
+
+    public function getSendStatusAttribute($value)
+    {
+        $send_status = [
+            0 => '未发货',
+            1 => '已发货'
+        ];
+        return $send_status[$value];
+    }
+
+    public function getOrderStatusAttribute($vlue)
+    {
+        $order_status = [
+            0 => '未发货',
+            1 => '已发货'
+        ];
+
+        return $order_status[$vlue];
+    }
+
+
 }
