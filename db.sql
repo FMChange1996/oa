@@ -1,16 +1,5 @@
 /*
 Navicat MySQL Data Transfer
-
-Source Server         : localhost_3306
-Source Server Version : 50719
-Source Host           : localhost:3306
-Source Database       : oa
-
-Target Server Type    : MYSQL
-Target Server Version : 50719
-File Encoding         : 65001
-
-Date: 2018-05-06 19:00:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -104,4 +93,4 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', '0', '', '0', null, '');
+INSERT INTO `user` VALUES (''1'', ''admin'', ''21232f297a57a5a743894a0e4a801fc3'', '''', '''', ''0'', '''', ''0'', null, '''');
