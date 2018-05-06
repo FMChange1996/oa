@@ -73,7 +73,7 @@
         $('#member_add').on('click', function (event) {
             $.ajax({
                 type: 'POST',
-                url: '{{url('home/add_member')}}',
+                url: '{{url('home/add_customer')}}',
                 data: $('#form').serialize(),
                 dataType: 'json',
                 success: function (response) {
@@ -82,7 +82,7 @@
                             icon: 6, time: 500, end: function () {
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
-                                window.parent.location.replace("{{url('home/member_list')}}");
+                                window.parent.location.replace("{{url('home/customer_list')}}");
                             }
                         });
                     } else {
