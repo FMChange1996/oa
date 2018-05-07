@@ -9,9 +9,24 @@
 
 安装说明：
 --------
-1.用Git下载软件包
+####1.用Git下载软件包
 
 <code>git clone https://gitee.com/hades1996/OA.git </code>
 
-2.将目录下的storage目录设置为777
-3.
+####2.将目录下的storage目录设置为777
+
+####3.用composer安装所需的包
+
+<code>composer  install</code>
+
+####4.重命名配置文件
+
+<code> mv .env.example .env </code>
+
+####5.修改配置文件
+
+
+
+
+
+
