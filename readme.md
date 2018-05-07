@@ -25,6 +25,11 @@
 
 ####5.修改配置文件
 
+######DB_DATABASE=数据库名
+######DB_USERNAM=数据库用户名
+######DB_PASSWORD=数据库密码
+######KDN_APP_ID=快递鸟APP_ID
+######KDN_APP_KEY=快递鸟APP_KEY
 
 
 
