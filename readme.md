@@ -32,6 +32,10 @@
 ######KDN_APP_KEY=快递鸟APP_KEY
 
 
+####6.生成APP_KEY
+<code> php artisan key:generate </code>
+
+
 
 
 
