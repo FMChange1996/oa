@@ -13,7 +13,7 @@
 
 <code>git clone https://gitee.com/hades1996/OA.git </code>
 
-####2 .将目录下的storage目录设置为777
+#### 2 .将目录下的storage目录设置为777
 
 #### 3.用composer安装所需的包
 
