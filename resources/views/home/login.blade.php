@@ -60,6 +60,13 @@
         })
     });
 
+    window.onload = function () {
+      if (location.href.indexOf('#reloaded') == -1){
+          location.href = location.href + '#reloaded';
+          parent.location.reload();
+      }
+    };
+
 
 </script>
 
