@@ -93,4 +93,4 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (''1'', ''admin'', ''21232f297a57a5a743894a0e4a801fc3'', '''', '''', ''0'', '''', ''0'', null, '''');
+INSERT INTO `user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'null', 'null', '0', '1524971821', '0', null, '1525094592');
