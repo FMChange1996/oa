@@ -59,29 +59,29 @@
         </tr>
         </thead>
         <tbody>
+        @foreach($table as $table)
         <tr>
-            @foreach($table as $table)
-                <td>{{$table -> id}}</td>
-                <td>{{$table -> wangwang}}</td>
-                @if($table -> first_time == null)
-                <td><a onclick="x_admin_show('第一次跟进','{{url('home/get_track/id='.$table -> id.'&key=first_time')}}',600,400)" >跟踪</a></td>
-                @else
-                <td>{{$table -> first_time}}</td>
-                @endif
-                @if($table -> second_time == null)
-                <td><a onclick="x_admin_show('第二次跟进','{{url('home/get_track/id='.$table -> id.'&key=second_time')}}',600,400)">跟踪</a></td>
-                @else
-                <td>{{$table -> second_time}}</td>
-                @endif
-                @if($table -> third_time == null)
-                <td><a onclick="x_admin_show('第三次跟进','{{url('home/get_track/id='.$table -> id.'&key=third_time')}}',600,400)">跟踪</a></td>
-                @else
-                <td>{{$table -> third_time}}</td>
-                @endif
-                <td>{{date("Y/m/d H:i:s",$table -> create_at)}}</td>
-                <td>{{$table -> creator}}</td>
-            @endforeach
+            <td>{{$table -> id}}</td>
+            <td>{{$table -> wangwang}}</td>
+            @if($table -> first_time == null)
+            <td><a onclick="x_admin_show('第一次跟进','{{url('home/get_track/id='.$table -> id.'&key=first_time')}}',600,400)" >跟踪</a></td>
+            @else
+            <td>{{$table -> first_time}}</td>
+            @endif
+            @if($table -> second_time == null)
+            <td><a onclick="x_admin_show('第二次跟进','{{url('home/get_track/id='.$table -> id.'&key=second_time')}}',600,400)">跟踪</a></td>
+            @else
+            <td>{{$table -> second_time}}</td>
+            @endif
+            @if($table -> third_time == null)
+            <td><a onclick="x_admin_show('第三次跟进','{{url('home/get_track/id='.$table -> id.'&key=third_time')}}',600,400)">跟踪</a></td>
+            @else
+            <td>{{$table -> third_time}}</td>
+            @endif
+            <td>{{date("Y/m/d H:i:s",$table -> create_time)}}</td>
+            <td>{{$table -> creator}}</td>
         </tr>
+        @endforeach
         </tbody>
     </table>
     <div id="test"></div>

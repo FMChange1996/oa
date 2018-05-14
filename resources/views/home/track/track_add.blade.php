@@ -54,7 +54,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.status == 0) {
-                        layer.msg(reponse.message, {
+                        layer.msg(response.message, {
                             icon: 6, time: 500, end: function () {
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
