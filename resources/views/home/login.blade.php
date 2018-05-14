@@ -39,8 +39,6 @@
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
         });
-
-
         //提交信息
         $('#login').on('click',function (event) {
             $.ajax({

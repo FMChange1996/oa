@@ -68,4 +68,13 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::post('home/del_customer', 'CustomerController@del_customer');
     Route::post('home/add_customer','CustomerController@add_customer');
     Route::post('home/update_customer','CustomerController@update_customer');
+    //SystemController
+    Route::get('home/system_log','SystemController@log_list');
+    //TrackController
+    Route::get('home/track_list','TrackController@index');
+    Route::get('home/track_add','TrackController@track_add');
+    Route::post('home/update_track','TrackController@update_track');
+    Route::get('home/get_track/id={id}&key={key}','TrackController@get_track');
+    Route::post('home/add_track','TrackController@add_track');
+
 });
