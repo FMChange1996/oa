@@ -91,6 +91,23 @@ CREATE TABLE `user` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for track
+-- ----------------------------
+DROP TABLE IF EXISTS `track`;
+CREATE TABLE `track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wangwang` varchar(255) DEFAULT NULL,
+  `first_time` varchar(255) DEFAULT NULL,
+  `second_time` varchar(255) DEFAULT NULL,
+  `third_time` varchar(255) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', null, null, '0', '1524971821', '0', null, '1525094592');
