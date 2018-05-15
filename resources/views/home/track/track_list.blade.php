@@ -46,20 +46,20 @@
         </button>
         <span class="x-right" style="line-height:40px">共有数据：{{$count}} 条</span>
     </xblock>
-    <table class="layui-table">
+    <table class="layui-table" id="demo" lay-filter="table1" lay-size="sm">
         <thead>
         <tr>
             <th>ID</th>
             <th>旺旺ID</th>
             <th>第一次跟踪时间</th>
-            <th>第一次跟踪时间</th>
-            <th>第一次跟踪时间</th>
+            <th>第二次跟踪时间</th>
+            <th>第三次跟踪时间</th>
             <th>创建时间</th>
             <th>创建人</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($table as $table)
+        @foreach($tables as $table)
         <tr>
             <td>{{$table -> id}}</td>
             <td>{{$table -> wangwang}}</td>
@@ -84,10 +84,17 @@
         @endforeach
         </tbody>
     </table>
+    <div class="page">
+        <div>
+            {{  $tables ->appends(request() -> input()) ->render()}}
+        </div>
+    </div>
+
     <div id="test"></div>
 </div>
 <script>
-    layui.use('laydate',function () {
+    layui.use(['laydate','table','jquery'],function () {
+        var table = layui.table;
         var laydate = layui.laydate;
         laydate.render({
             elem:'#screen_time',

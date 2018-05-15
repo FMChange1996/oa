@@ -29,7 +29,7 @@
                 <span class="x-red">*</span>旺旺名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" value="{{$table -> wangwang}}"
+                <input type="text" id="wangwang" name="wangwang" value="{{$table -> wangwang}}"
                        autocomplete="off" class="layui-input" disabled="disabled">
             </div>
         </div>

@@ -12,8 +12,9 @@ class TrackController extends Controller
     //渲染首页
     public function index()
     {
-        $table = TrackModel::all();
-        return view('home/track/track_list',['title' => '客户跟踪','table' => $table , 'count' => $table ->count()]);
+        $table = TrackModel::paginate(15);
+//        var_dump($table ->toJson());
+        return view('home/track/track_list',['title' => '客户跟踪', 'tables' => $table ,'count' => $table ->count()]);
     }
 
     //添加时间
@@ -89,9 +90,19 @@ class TrackController extends Controller
     public function screen_track(Request $request)
     {
         $data = $request -> all();
-        $table = TrackModel::where('create_time',$data['screen_time']) -> get();
-        return view('home/track/track_list',['title' => '客户跟踪','table' => $table , 'count' => $table ->count()]);
+        $table = TrackModel::where('create_time',$data['screen_time']) -> paginate(15);
+        return view('home/track/track_list',['title' => '客户跟踪','tables' => $table , 'count' => $table ->count()]);
 
     }
 
+    public function get_all()
+    {
+        $table = TrackModel::all();
+        return response() -> json([
+            'code' => 0,
+            'msg' => '',
+            'count' => $table -> count(),
+            'data' => $table -> toJson()
+        ]);
+    }
 }
