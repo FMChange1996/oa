@@ -71,7 +71,7 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::post('home/add_customer','CustomerController@add_customer');
     Route::post('home/update_customer','CustomerController@update_customer');
     //SystemController
-    Route::get('home/system_log','SystemController@log_list');
+    Route::get('home/system_logs','SystemController@log_list');
     //TrackController
     Route::get('home/track_list','TrackController@index');
     Route::get('home/track_add','TrackController@track_add');

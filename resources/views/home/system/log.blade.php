@@ -34,9 +34,7 @@
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">
-    <xblock>
-        <span class="x-right" style="line-height:40px">共有数据：{{$count}} 条</span>
-    </xblock>
+    <span class="x-right" style="line-height:40px">共有数据：{{$count}} 条</span>
     <table class="layui-table">
         <thead>
         <tr>
@@ -57,10 +55,11 @@
         @endforeach
         </tbody>
     </table>
-    <div class="page">
-        <div>
-            {{  $tables ->appends(request() -> input()) ->render()}}
-        </div>
+
+</div>
+<div class="page">
+    <div>
+        {{  $tables -> links()}}
     </div>
 </div>
 </body>

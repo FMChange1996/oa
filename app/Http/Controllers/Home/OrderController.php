@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\OrderModel;
+use App\SytemModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,6 +63,11 @@ class OrderController extends Controller
             ];
             $response = OrderModel::insert($datas);
             if ($response == true) {
+                SytemModel::insert([
+                    'username' => session() -> get('username'),
+                    'context' => '添加订单，订单号：'.$datas['order_id'],
+                    'time' => time()
+                ]);
                 return response()->json(['code' => 200, 'message' => '添加成功']);
             } else {
                 return response()->json(['code' => 500, 'message' => '添加失败']);
@@ -76,6 +82,11 @@ class OrderController extends Controller
         $find = OrderModel::find($data['id']);
         $find->delete();
         if ($find->trashed()) {
+            SytemModel::insert([
+                'username' => session() -> get('username'),
+                'context' => '删除订单，订单号：'.$find ->order_id,
+                'time' => time()
+            ]);
             return response()->json(['code' => 200, 'message' => '删除成功']);
         } else {
             return response()->json(['code' => 500, 'message' => '删除失败']);
@@ -108,6 +119,11 @@ class OrderController extends Controller
             $find->shipping_num = $data['shipping_num'];
             $find->order_status = 1;
             if ($find->save()) {
+                SytemModel::insert([
+                    'username' => session() -> get('username'),
+                    'context' => '订单发货，订单号：'.$find ->order_id,
+                    'time' => time()
+                ]);
                 return response()->json(['code' => 200, 'message' => '发货成功']);
             } else {
                 return response()->json(['code' => 500, 'message' => '发货失败']);

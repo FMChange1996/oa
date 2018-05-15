@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\SytemModel;
 use App\UsersModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -62,6 +61,11 @@ class AdminController extends Controller
                     'create_time' => $data['create_time']
                 ]);
                 if ($respone == true) {
+                    SytemModel::insert([
+                        'username' => session() -> get('username'),
+                        'context' => '创建用户：'.$data['username'],
+                        'time' => time()
+                    ]);
                     return response()->json(['status' => 0, 'message' => '创建成功']);
                 } else {
                     return response()->json(['status' => 1, 'message' => '创建失败']);
@@ -102,8 +106,12 @@ class AdminController extends Controller
             $del = UsersModel::find($data['id']);
             $del -> delete();
             if ($del -> trashed()){
+                SytemModel::insert([
+                    'username' => session() -> get('username'),
+                    'context' => '删除用户：'.$up['username'],
+                    'time' => time()
+                ]);
                 return response() -> json(['code' => 200]);
-
             }else{
                 return response() -> json(['code' => 500]);
             }
@@ -121,6 +129,11 @@ class AdminController extends Controller
             $res = UsersModel::find($data['id']);
             $res -> status = $data['status'];
             if ($res -> save()){
+                SytemModel::insert([
+                    'username' => session() -> get('username'),
+                    'context' => '更改用户：'.$response -> username.'状态',
+                    'time' => time()
+                ]);
                 return response() -> json(['code' => 200]);
             }else{
                 return response() -> json(['code' => 500 , 'message' => '更改失败！']);
@@ -165,8 +178,8 @@ class AdminController extends Controller
                 $req -> mobile = $data['mobile'];
                 if ($req ->save()){
                     SytemModel::insert([
-                        'username' => Session::get('username'),
-                        'context' => '用户'.Session::get('username').'更改了'.$req['username'].'信息',
+                        'username' => session() -> get('username'),
+                        'context' => '更改了'.$req['username'].'信息',
                         'time' => time()
                     ]);
                     return response() -> json(['status' => 0 , 'message' => '保存成功']);
@@ -183,6 +196,11 @@ class AdminController extends Controller
                     session() -> forget('password');
                     session() -> forget('id');
                     session() -> flush();
+                    SytemModel::insert([
+                        'username' => session() -> get('username'),
+                        'context' => '更改用户：'.$req -> username.'密码',
+                        'time' => time()
+                    ]);
                     return response() -> json(['status' => 0 , 'message' => '保存成功，请使用新密码登录']);
                 }else{
                     return response() -> json(['status' => 1 , 'message' => '保存失败' ]);
