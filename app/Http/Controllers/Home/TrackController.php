@@ -13,7 +13,6 @@ class TrackController extends Controller
     public function index()
     {
         $table = TrackModel::paginate(15);
-//        var_dump($table ->toJson());
         return view('home/track/track_list',['title' => '客户跟踪', 'tables' => $table ,'count' => $table ->count()]);
     }
 
@@ -25,6 +24,11 @@ class TrackController extends Controller
         $find = TrackModel::find($data['id']);
         $find -> $key = $data['time'];
         if ($find -> save()){
+            SytemModel::insert([
+                'username' => session() -> get('username'),
+                'context' => '添加时间，客户：'.$find -> wangwang,
+                'time' => time()
+            ]);
             return response() -> json(['status' => 0 , 'message' => '写入数据成功']);
         }else{
             return response() -> json(['status' => 1 , 'message' => '写入数据失败']);
@@ -76,6 +80,11 @@ class TrackController extends Controller
                 ];
                 $insert = TrackModel::insert($datas);
                 if ($insert == true){
+                    SytemModel::insert([
+                        'username' => session() -> get('username'),
+                        'context' => '添加客户，客户：'.$datas['wangwang'],
+                        'time' => time()
+                    ]);
                     return response() -> json(['status' => 0 , 'message' => '添加成功']);
                 }else{
                     return response() -> json(['status' => 1 , 'message' => '添加失败']);

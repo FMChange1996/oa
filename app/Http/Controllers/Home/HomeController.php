@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\SytemModel;
 use App\UsersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -54,6 +55,11 @@ class HomeController extends Controller
                                 'id' => $users -> id,
                                 'role' => $users -> role
                             ]);
+                            SytemModel::insert([
+                                'username' => session() -> get('username'),
+                                'context' => '登录系统',
+                                'time' => time()
+                            ]);
                             return response() -> json(['status' => 0 , 'message' => '登录成功']);
                         }
                     }else{
@@ -67,6 +73,11 @@ class HomeController extends Controller
     //退出登录
     public function logout()
     {
+        SytemModel::insert([
+            'username' => session() -> get('username'),
+            'context' => '退出系统',
+            'time' => time()
+        ]);
         session() -> forget('username');
         session() -> forget('password');
         session() -> forget('id');
