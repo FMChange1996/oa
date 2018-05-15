@@ -108,6 +108,19 @@ CREATE TABLE `track` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for logs
+-- ----------------------------
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `context` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL , NULL , '0', NULL ,'0', NULL , NULL );
