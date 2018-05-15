@@ -50,7 +50,7 @@
                 <td>{{$table -> id}}</td>
                 <td>{{$table -> username}}</td>
                 <td>{{$table -> context}}</td>
-                <td>{{$table -> time}}</td>
+                <td>{{date('Y-m-d H:i:s',$table -> time)}}</td>
             </tr>
         @endforeach
         </tbody>
