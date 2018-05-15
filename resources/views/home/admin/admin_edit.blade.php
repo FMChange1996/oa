@@ -65,7 +65,6 @@
         <div class="layui-form-item">
             <label class="layui-form-label"><span class="x-red">*</span>角色</label>
             <div class="layui-input-inline">
-                @if(Session::get('username') == 'admin')
                 <select name="role">
                     @if(Session::get('username') == 'admin')
                         <option value="0">超级管理员</option>
@@ -79,7 +78,6 @@
                         @endif
                     @endif
                 </select>
-                @endif
             </div>
         </div>
         <div class="layui-form-item">

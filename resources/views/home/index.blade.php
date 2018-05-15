@@ -140,7 +140,7 @@
                         </li >
                     @else
                         <li>
-                            <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
+                            <a _href="{{url('home/admin_edit/id='.Session::get('id'))}}">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>修改密码</cite>
                             </a>

@@ -66,17 +66,23 @@ class TrackController extends Controller
         if ($validate -> fails()){
             return response() -> json(['status' => 1 , 'message' => $validate -> errors() -> first()]);
         }else{
-            $datas =[
-                'wangwang' => $data['wangwang'],
-                'create_time' => date("Y-m-d",time()),
-                'creator' => session() -> get('username')
-            ];
-            $insert = TrackModel::insert($datas);
-            if ($insert == true){
-                return response() -> json(['status' => 0 , 'message' => '添加成功']);
+            $find = TrackModel::where('wangwang',$data['wangwang']) -> first();
+            if ($find == null){
+                $datas =[
+                    'wangwang' => $data['wangwang'],
+                    'create_time' => date("Y-m-d",time()),
+                    'creator' => session() -> get('username')
+                ];
+                $insert = TrackModel::insert($datas);
+                if ($insert == true){
+                    return response() -> json(['status' => 0 , 'message' => '添加成功']);
+                }else{
+                    return response() -> json(['status' => 1 , 'message' => '添加失败']);
+                }
             }else{
-                return response() -> json(['status' => 1 , 'message' => '添加失败']);
+                return response() -> json(['status' => 1 , 'message' => '该旺旺号已存在']);
             }
+
         }
     }
 
