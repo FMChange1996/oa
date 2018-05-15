@@ -96,7 +96,7 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont">&#xe726;</i>
+                    <i class="iconfont">&#xe70b;</i>
                     <cite>跟踪管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
