@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
 
 class ExpressController extends Controller
@@ -47,5 +48,47 @@ class ExpressController extends Controller
     public function search_num()
     {
         return view('home/express/seach');
+    }
+
+    public function SyExpNo(Request $request)
+    {
+        $ExpNo = $request -> all()['ExpNo'];
+        $client = new Client();
+        $url = 'http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx';
+        $RequestData = json_encode([
+            'LogisticCode' => $ExpNo
+        ]);
+        $DataSign = urlencode(base64_encode(md5($RequestData . getenv('KDN_APP_KEY'))));
+        $response = $client->request('POST', $url, ['form_params' => [
+            'RequestData' => $RequestData,
+            'EBusinessID' => getenv('KDN_APP_ID'),
+            'RequestType' => '2002',
+            'DataType' => '2',
+            'DataSign' => $DataSign
+        ]])->getbody();
+        return $response -> getContents();
+    }
+
+    public function SearchTrackByExpNo(Request $request)
+    {
+        $data = $request -> all();
+        $ExpCode = $data['ExpCode'];
+        $ExpNo = $data['ExpNo'];
+        $client = new Client();
+        $url = 'http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx';
+        $RequestData = json_encode([
+            'ShipperCode' => $ExpCode,
+            'LogisticCode' => $ExpNo
+        ]);
+        $DataSign = urlencode(base64_encode(md5($RequestData . getenv('KDN_APP_KEY'))));
+        $response = $client->request('POST', $url, ['form_params' => [
+            'RequestData' => $RequestData,
+            'EBusinessID' => getenv('KDN_APP_ID'),
+            'RequestType' => '1002',
+            'DataType' => '2',
+            'DataSign' => $DataSign
+        ]])->getbody();
+        return $response -> getContents();
+
     }
 }

@@ -36,7 +36,6 @@
         <div class="layui-form-item">
             <label for="submit" class="layui-form-label">
             </label>
-            <input type="hidden" name="creator" value="{{Session::get('username')}}">
             <input type="button" id="member_add" value="添加跟踪客户" class="layui-btn">
         </div>
     </form>

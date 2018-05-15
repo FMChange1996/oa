@@ -1186,16 +1186,6 @@
 <!--companys end-->
 <!--搜索成功 start-->
 <div class="query-outline hide " id="searchSuccess" >
-    <div class="up-title">
-        <ul>
-            <li class="title-item expressTitle" ></li>
-            <li class="title-item expressTel"><img src="/assets/OutInvoke/PC/images/phone.png" alt=""></li>
-            <li class="title-item">
-                <img src="/assets/OutInvoke/PC/images/internet.png" alt="">
-                <a href="" target="_blank" class="expressWebSite">官网</a>
-            </li>
-        </ul>
-    </div>
     <div class="store-content">
         <div class="sc-show">
             <ul id="ultrack">
@@ -1207,16 +1197,6 @@
 <!--搜索成功 end-->
 <!--搜索失败start-->
 <div class="query-outline hide " id="searchFail">
-    <div class="up-title">
-        <ul>
-            <li class="title-item expressTitle" >韵达快递</li>
-            <li class="title-item expressTel"><img src="/assets/OutInvoke/PC/images/phone.png" alt="">电话：021-069365216</li>
-            <li class="title-item">
-                <img src="/assets/OutInvoke/PC/images/internet.png" alt="">
-                <a href="" target="_blank" class="expressWebSite">官网</a>
-            </li>
-        </ul>
-    </div>
     <div class="store-content">
 
         <span class="f24 error-title">抱歉,此单号暂无轨迹</span>
@@ -1233,6 +1213,212 @@
 </body>
 <script src="{{url('js/jquery.min.js')}}"></script>
 <script src="{{url('js/webchat.js')}}"></script>
-<script src="{{url('js/SearchTrack.js')}}"></script>
+<script>
+
+    $(function () {
+        $(".express-icon").click(function () {
+            $(".express-companys").toggle(300);
+            $("#searchSuccess").hide();
+            $("#searchFail").hide();
+        });
+        $(".com-list .all-list li a,.com-list .common a").click(function () {
+            //选择快递公司，如果有单号，则直接用此快递公司查询
+            var _expName = $(this).text();
+            if ($("#searchArea").val().trim().length > 0) {
+                $(".express-icon>span").text($(this).text());
+                $(".express-icon>span").attr("data-code", $(this).attr("data-code"));
+                $(".express-companys").toggle(300);
+                $.ajaxSetup({
+                    headers:{'X-CSRF-TOKEN':"{{csrf_token()}}"}
+                });
+                $.ajax({
+                    type:'POST',
+                    url:'{{url('home/SearchTrackByExpNo')}}',
+                    data:{
+                        ExpNo: $("#searchArea").val().trim(),
+                        ExpCode: $(this).attr("data-code")
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        if (data) {
+                            if (data.Traces && data.Traces.length > 0) {
+                                var myHtml = "";
+                                var lineSty = "";
+                                for (var i = 0; i < data.Traces.length; i++) {
+                                    if (i == 0) {
+                                        lineSty = "item-sub-head";
+                                    }
+                                    else if (i == (data.Traces.length - 1)) {
+                                        lineSty = "item-sub-footer";
+                                    }
+                                    else {
+                                        lineSty = "";
+                                    }
+                                    myHtml += "<li class=\"item\">" +
+                                        "<span class=\"item-sub1\">" + data.Traces[i].AcceptTime + "</span>" +
+                                        "<span class=\"item-sub2  " + lineSty + "\"></span>" +
+                                        "<span class=\"item-sub3\">" + data.Traces[i].AcceptStation + "</span>" +
+                                        "</li>";
+
+                                }
+                                $("#ultrack").empty();
+                                $("#ultrack").append(myHtml);
+                                $("#searchSuccess").show();
+                                $(".express-companys").hide();
+                            } else {//没有查询成功
+                                $("#searchSuccess").hide();
+                                $("#searchFail").show();
+                                $(".express-companys").hide();
+                            }
+                        }
+                    }
+                });
+            }
+            else {
+                $(".express-companys").toggle(300);
+                $(".express-icon>span").text($(this).text());
+                $(".express-icon>span").attr("data-code", $(this).attr("data-code"));
+            }
+        });
+        //点击查询
+        $("#beginsearch").click(function () {
+            if ($("#searchArea").val().trim().length<=0) {
+                return false;
+            }
+            searchOrder();
+        });
+        var timer;
+
+        //单号识别
+        $("#searchArea").on("keyup",function () {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            if ($("#searchArea").val().trim().length<=0) {
+                $("#inputTips").hide();
+                $(".autoinsert").remove();
+                return false;
+            }
+            var me = $(this);
+            timer = setTimeout(function () {
+                autoSelect(me.val());
+            }, 700);
+        });
+        $("#searchArea").on("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            if ($(".autoinsert") && $(".autoinsert").length>0) {
+                $("#inputTips").show();
+            }
+        });
+        $("#inputTips").click(function () {
+            e.stopPropagation();
+            e.preventDefault();
+        })
+        $("#inputTips").on("click", ".autoinsert", {}, function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(".express-icon>span").text($(this).find(".expItem").text());
+            $(".express-icon>span").attr("data-code", $(this).find(".expItem").attr("data-code"));
+            $(".autoinsert").remove();
+            $("#inputTips").hide();
+            searchOrder();
+        });
+        $("body,html").click(function () {
+            $("#inputTips").hide();
+        });
+
+    });
+    function searchOrder()
+    {
+        $.ajaxSetup({
+            headers:{'X-CSRF-TOKEN':"{{csrf_token()}}"}
+        });
+        $.ajax({
+           type:'POST',
+           url:'{{url('home/SearchTrackByExpNo')}}',
+           data:{
+               ExpNo: $("#searchArea").val().trim(),
+               ExpCode: $("#autosy").attr("data-code")
+           },
+           dataType:'json',
+           success:function (data) {
+               if (data) {
+                   if (data.LogisticCode && data.LogisticCode.length > 0) {
+                       $(".express-icon>span").text(data.LogisticCode);
+                   }
+                   if (data.ShipperCode && data.ShipperCode.length > 0) {
+                       $(".express-icon>span").attr("data-code", data.ShipperCode);
+                   }
+                   if (data.Traces && data.Traces.length > 0) {
+                       var myHtml = "";
+                       var lineSty = "";
+                       for (var i = 0; i < data.Traces.length; i++) {
+                           if (i == 0) {
+                               lineSty = "item-sub-head";
+                           }
+                           else if (i == (data.Traces.length - 1)) {
+                               lineSty = "item-sub-footer";
+                           }
+                           else {
+                               lineSty = "";
+                           }
+                           myHtml += "<li class=\"item\">" +
+                               "<span class=\"item-sub1\">" + data.Traces[i].AcceptTime + "</span>" +
+                               "<span class=\"item-sub2  " + lineSty + "\"></span>" +
+                               "<span class=\"item-sub3\">" + data.Traces[i].AcceptStation + "</span>" +
+                               "</li>";
+
+                       }
+                       $("#ultrack").empty();
+                       $("#ultrack").append(myHtml);
+                       $("#searchSuccess").show();
+                       $("#searchFail").hide();
+                       $(".express-companys").hide();
+                   } else {//没有查询成功
+                       $("#searchSuccess").hide();
+                       $("#searchFail").show();
+                       $(".express-companys").hide();
+                   }
+               }
+           }
+        });
+    }
+    function autoSelect(keyValue)
+    {
+        if (keyValue && keyValue.trim().length > 0) {
+            //启动单号识别
+            $.ajaxSetup({
+                headers:{'X-CSRF-TOKEN':'{{csrf_token()}}'}
+            });
+            $.ajax({
+                type:'POST',
+                url:'{{url('home/SyExpNo')}}',
+                data:{
+                    ExpNo: keyValue
+                },
+                dataType:'json',
+                success:function (data) {
+                    if (data && data.Shippers && data.Shippers.length>0) {
+                        var myHtml = "";
+                        for (var i = 0; i < data.Shippers.length; i++) {
+                            myHtml += "<li class=\"selection selection0 autoinsert\"><span>" + keyValue + "</span><a class=\"expItem\" data-code='" + data.Shippers[i].ShipperCode + "'>" + data.Shippers[i].ShipperName + "</a></li>";
+                        }
+                        $(".autoinsert").remove();
+                        $(".otline").before(myHtml);
+                        $("#inputTips").show();
+                    }
+                    else {
+                        $(".autoinsert").remove();
+                        $("#inputTips").hide();
+                    }
+                }
+            });
+        }
+        else {
+            $("#inputTips").hide();
+        }
+    }
+</script>
 
 </html>

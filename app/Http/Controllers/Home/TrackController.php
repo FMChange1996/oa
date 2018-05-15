@@ -69,7 +69,7 @@ class TrackController extends Controller
             $datas =[
                 'wangwang' => $data['wangwang'],
                 'create_time' => time(),
-                'creator' => $data['creator']
+                'creator' => session() -> get('username')
             ];
             $insert = TrackModel::insert($datas);
             if ($insert == true){

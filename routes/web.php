@@ -61,6 +61,8 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('/home/express_serch/number={number}', 'ExpressController@seach');
     //ExpressController
     Route::get('home/search_num', 'ExpressController@search_num');
+    Route::post('home/SyExpNo','ExpressController@SyExpNo');
+    Route::post('home/SearchTrackByExpNo','ExpressController@SearchTrackByExpNo');
     //CustomerContirller
     Route::get('home/customer_list', 'CustomerController@customer_list');
     Route::get('home/customer_edit/id={id}', 'CustomerController@customer_edit');
