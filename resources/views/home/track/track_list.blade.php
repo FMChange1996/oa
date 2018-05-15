@@ -34,9 +34,9 @@
 </div>
 <div class="x-body">
     <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" id="seach_member" name="seach_member" >
-            <input type="text" name="seach_user" id="seach_user" placeholder="请输入用户名" autocomplete="off"
-                   class="layui-input" disabled="">
+        <form class="layui-form layui-col-md12 x-so" id="seach_member" name="seach_member" method="get" action="{{url('home/screen_track')}}">
+            <input type="text" name="screen_time" id="screen_time" placeholder="选择需要筛选的日期" autocomplete="off"
+                   class="layui-input">
             <button class="layui-btn" id="seach" ><i class="layui-icon">&#xe615;</i></button>
         </form>
     </div>
@@ -78,7 +78,7 @@
             @else
             <td>{{$table -> third_time}}</td>
             @endif
-            <td>{{date("Y/m/d H:i:s",$table -> create_time)}}</td>
+            <td>{{$table -> create_time}}</td>
             <td>{{$table -> creator}}</td>
         </tr>
         @endforeach
@@ -86,7 +86,17 @@
     </table>
     <div id="test"></div>
 </div>
-
+<script>
+    layui.use('laydate',function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem:'#screen_time',
+            done:function (value) {
+                document.getElementById('screen_time').value = value;
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

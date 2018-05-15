@@ -68,7 +68,7 @@ class TrackController extends Controller
         }else{
             $datas =[
                 'wangwang' => $data['wangwang'],
-                'create_time' => time(),
+                'create_time' => date("Y-m-d",time()),
                 'creator' => session() -> get('username')
             ];
             $insert = TrackModel::insert($datas);
@@ -80,6 +80,12 @@ class TrackController extends Controller
         }
     }
 
+    public function screen_track(Request $request)
+    {
+        $data = $request -> all();
+        $table = TrackModel::where('create_time',$data['screen_time']) -> get();
+        return view('home/track/track_list',['title' => '客户跟踪','table' => $table , 'count' => $table ->count()]);
 
+    }
 
 }
