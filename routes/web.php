@@ -61,6 +61,8 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::get('/home/express_serch/number={number}', 'ExpressController@seach');
     //ExpressController
     Route::get('home/search_num', 'ExpressController@search_num');
+    Route::post('home/SyExpNo','ExpressController@SyExpNo');
+    Route::post('home/SearchTrackByExpNo','ExpressController@SearchTrackByExpNo');
     //CustomerContirller
     Route::get('home/customer_list', 'CustomerController@customer_list');
     Route::get('home/customer_edit/id={id}', 'CustomerController@customer_edit');
@@ -68,4 +70,14 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::post('home/del_customer', 'CustomerController@del_customer');
     Route::post('home/add_customer','CustomerController@add_customer');
     Route::post('home/update_customer','CustomerController@update_customer');
+    //SystemController
+    Route::get('home/system_log','SystemController@log_list');
+    //TrackController
+    Route::get('home/track_list','TrackController@index');
+    Route::get('home/track_add','TrackController@track_add');
+    Route::post('home/update_track','TrackController@update_track');
+    Route::get('home/get_track/id={id}&key={key}','TrackController@get_track');
+    Route::post('home/add_track','TrackController@add_track');
+    Route::get('home/screen_track','TrackController@screen_track');
+
 });

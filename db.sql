@@ -20,7 +20,7 @@ CREATE TABLE `customer` (
   `deleted_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for member
@@ -37,7 +37,7 @@ CREATE TABLE `member` (
   `deleted_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for migrations
@@ -48,7 +48,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for order
@@ -70,7 +70,7 @@ CREATE TABLE `order` (
   `deleted_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for user
@@ -88,7 +88,24 @@ CREATE TABLE `user` (
   `deleted_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for track
+-- ----------------------------
+DROP TABLE IF EXISTS `track`;
+CREATE TABLE `track` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wangwang` varchar(255) DEFAULT NULL,
+  `first_time` varchar(255) DEFAULT NULL,
+  `second_time` varchar(255) DEFAULT NULL,
+  `third_time` varchar(255) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user

@@ -2,8 +2,10 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\SytemModel;
 use App\UsersModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -162,6 +164,11 @@ class AdminController extends Controller
                 $req -> mail = $data['mail'];
                 $req -> mobile = $data['mobile'];
                 if ($req ->save()){
+                    SytemModel::insert([
+                        'username' => Session::get('username'),
+                        'context' => '用户'.Session::get('username').'更改了'.$req['username'].'信息',
+                        'time' => time()
+                    ]);
                     return response() -> json(['status' => 0 , 'message' => '保存成功']);
                 }else{
                     return response() -> json(['status' => 1 , 'message' => '保存失败']);

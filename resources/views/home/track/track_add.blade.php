@@ -26,59 +26,17 @@
     <form class="layui-form" id="form" name="form">
         <div class="layui-form-item">
             <label for="username" class="layui-form-label">
-                <span class="x-red">*</span>名字
+                <span class="x-red">*</span>旺旺名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username"
+                <input type="text" id="wangwang" name="wangwang"
                        autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="sex" class="layui-form-label">
-                <span class="x-red">*</span>性别
-            </label>
-            <div class="layui-input-inline">
-                <select name="sex">
-                    <option value="">请选择</option>
-                    <option value="0">男</option>
-                    <option value="1">女</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="mobile" class="layui-form-label">
-                <span class="x-red">*</span>手机号
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="mobile" name="mobile"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="mail" class="layui-form-label">
-                邮箱号
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="mail" name="mail"
-                       autocomplete="off" class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                可空
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="address" class="layui-form-label">
-                <span class="x-red">*</span>地址
-            </label>
-            <div class="layui-input-inline">
-                <textarea name="address" placeholder="请输入地址" class="layui-textarea"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label for="submit" class="layui-form-label">
             </label>
-            <input type="hidden" name="create_at" value="{{time()}}">
-            <input type="button" id="member_add" value="增加客户" class="layui-btn">
+            <input type="button" id="member_add" value="添加跟踪客户" class="layui-btn">
         </div>
     </form>
 </div>
@@ -90,7 +48,7 @@
         $('#member_add').on('click', function (event) {
             $.ajax({
                 type: 'POST',
-                url: '{{url('home/add_member')}}',
+                url: '{{url('home/add_track')}}',
                 data: $('#form').serialize(),
                 dataType: 'json',
                 success: function (response) {
@@ -99,7 +57,7 @@
                             icon: 6, time: 500, end: function () {
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
-                                window.parent.location.replace("{{url('home/member_list')}}");
+                                window.parent.location.replace("{{url('home/track_list')}}");
                             }
                         });
                     } else {

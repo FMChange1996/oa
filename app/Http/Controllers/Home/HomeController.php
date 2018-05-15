@@ -51,7 +51,8 @@ class HomeController extends Controller
                             session() -> put([
                                 'username' =>$users -> username ,
                                 'password' => $users -> password,
-                                'id' => $users -> id
+                                'id' => $users -> id,
+                                'role' => $users -> role
                             ]);
                             return response() -> json(['status' => 0 , 'message' => '登录成功']);
                         }

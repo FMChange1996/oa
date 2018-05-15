@@ -96,6 +96,21 @@
             </li>
             <li>
                 <a href="javascript:;">
+                    <i class="iconfont">&#xe726;</i>
+                    <cite>跟踪管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{{url('home/track_list')}}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>跟踪列表</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
                     <i class="iconfont">&#xe6cb;</i>
                     <cite>快递管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
@@ -125,7 +140,7 @@
                         </li >
                     @else
                         <li>
-                            <a _href="{{url('home/admin_list/username='.Session::get('username'))}}">
+                            <a _href="{{url('home/admin_edit/id='.Session::get('id'))}}">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>修改密码</cite>
                             </a>
