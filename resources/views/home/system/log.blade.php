@@ -47,7 +47,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($table as $table)
+        @foreach($tables as $table)
             <tr>
                 <td>{{$table -> id}}</td>
                 <td>{{$table -> username}}</td>
@@ -57,6 +57,11 @@
         @endforeach
         </tbody>
     </table>
+    <div class="page">
+        <div>
+            {{  $tables ->appends(request() -> input()) ->render()}}
+        </div>
+    </div>
 </div>
 </body>
 

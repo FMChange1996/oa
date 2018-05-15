@@ -95,14 +95,4 @@ class TrackController extends Controller
 
     }
 
-    public function get_all()
-    {
-        $table = TrackModel::all();
-        return response() -> json([
-            'code' => 0,
-            'msg' => '',
-            'count' => $table -> count(),
-            'data' => $table -> toJson()
-        ]);
-    }
 }
