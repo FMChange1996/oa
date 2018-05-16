@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\OrderModel;
-use App\SytemModel;
+use App\SystemModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -63,7 +63,7 @@ class OrderController extends Controller
             ];
             $response = OrderModel::insert($datas);
             if ($response == true) {
-                SytemModel::insert([
+                SystemModel::insert([
                     'username' => session() -> get('username'),
                     'context' => '添加订单，订单号：'.$datas['order_id'],
                     'time' => time()
@@ -82,7 +82,7 @@ class OrderController extends Controller
         $find = OrderModel::find($data['id']);
         $find->delete();
         if ($find->trashed()) {
-            SytemModel::insert([
+            SystemModel::insert([
                 'username' => session() -> get('username'),
                 'context' => '删除订单，订单号：'.$find ->order_id,
                 'time' => time()
@@ -119,7 +119,7 @@ class OrderController extends Controller
             $find->shipping_num = $data['shipping_num'];
             $find->order_status = 1;
             if ($find->save()) {
-                SytemModel::insert([
+                SystemModel::insert([
                     'username' => session() -> get('username'),
                     'context' => '订单发货，订单号：'.$find ->order_id,
                     'time' => time()

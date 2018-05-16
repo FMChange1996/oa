@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\TrackModel;
+use App\SystemModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +25,7 @@ class TrackController extends Controller
         $find = TrackModel::find($data['id']);
         $find -> $key = $data['time'];
         if ($find -> save()){
-            SytemModel::insert([
+            SystemModel::insert([
                 'username' => session() -> get('username'),
                 'context' => '添加时间，客户：'.$find -> wangwang,
                 'time' => time()
@@ -80,7 +81,7 @@ class TrackController extends Controller
                 ];
                 $insert = TrackModel::insert($datas);
                 if ($insert == true){
-                    SytemModel::insert([
+                    SystemModel::insert([
                         'username' => session() -> get('username'),
                         'context' => '添加客户，客户：'.$datas['wangwang'],
                         'time' => time()

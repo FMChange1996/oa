@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\CustomerModel;
 use App\Http\Controllers\Controller;
-use App\SytemModel;
+use App\SystemModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -37,7 +37,7 @@ class CustomerController extends Controller
         $find = CustomerModel::find($data['id']);
         $find->delete();
         if ($find->trashed()) {
-            SytemModel::insert([
+            SystemModel::insert([
                 'username' => session() -> get('username'),
                 'context' => '删除售后订单，订单号：'.$find -> customer_id,
                 'time' => time()
@@ -82,7 +82,7 @@ class CustomerController extends Controller
             ];
             $insert = CustomerModel::insert($datas);
             if ($insert == true){
-                SytemModel::insert([
+                SystemModel::insert([
                     'username' => session() -> get('username'),
                     'context' => '添加售后订单，订单号：'.$datas['customer_id'],
                     'time' => time()

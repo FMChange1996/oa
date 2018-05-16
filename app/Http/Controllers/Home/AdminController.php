@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
-use App\SytemModel;
+use App\SystemModel;
 use App\UsersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -61,7 +61,7 @@ class AdminController extends Controller
                     'create_time' => $data['create_time']
                 ]);
                 if ($respone == true) {
-                    SytemModel::insert([
+                    SystemModel::insert([
                         'username' => session() -> get('username'),
                         'context' => '创建用户：'.$data['username'],
                         'time' => time()
@@ -106,7 +106,7 @@ class AdminController extends Controller
             $del = UsersModel::find($data['id']);
             $del -> delete();
             if ($del -> trashed()){
-                SytemModel::insert([
+                SystemModel::insert([
                     'username' => session() -> get('username'),
                     'context' => '删除用户：'.$up['username'],
                     'time' => time()
@@ -129,7 +129,7 @@ class AdminController extends Controller
             $res = UsersModel::find($data['id']);
             $res -> status = $data['status'];
             if ($res -> save()){
-                SytemModel::insert([
+                SystemModel::insert([
                     'username' => session() -> get('username'),
                     'context' => '更改用户：'.$response -> username.'状态',
                     'time' => time()
@@ -177,7 +177,7 @@ class AdminController extends Controller
                 $req -> mail = $data['mail'];
                 $req -> mobile = $data['mobile'];
                 if ($req ->save()){
-                    SytemModel::insert([
+                    SystemModel::insert([
                         'username' => session() -> get('username'),
                         'context' => '更改了'.$req['username'].'信息',
                         'time' => time()
@@ -196,7 +196,7 @@ class AdminController extends Controller
                     session() -> forget('password');
                     session() -> forget('id');
                     session() -> flush();
-                    SytemModel::insert([
+                    SystemModel::insert([
                         'username' => session() -> get('username'),
                         'context' => '更改用户：'.$req -> username.'密码',
                         'time' => time()
