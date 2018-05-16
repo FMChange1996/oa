@@ -37,6 +37,8 @@
         <form class="layui-form layui-col-md12 x-so" id="seach_member" name="seach_member" method="get" action="{{url('home/screen_track')}}">
             <input type="text" name="screen_time" id="screen_time" placeholder="选择需要筛选的日期" autocomplete="off"
                    class="layui-input">
+            <input type="text" name="screen_name" id="screen_name" placeholder="请输入需要查找的旺旺ID" autocomplete="off"
+                   class="layui-input">
             <button class="layui-btn" id="seach" ><i class="layui-icon">&#xe615;</i></button>
         </form>
     </div>
@@ -80,13 +82,18 @@
             @endif
             <td>{{$table -> create_time}}</td>
             <td>{{$table -> creator}}</td>
+            <td class="td-manage">
+                <a title="删除" onclick="member_del(this,'{{$table -> id}}')" href="javascript:;">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+            </td>
         </tr>
         @endforeach
         </tbody>
     </table>
     <div class="page">
         <div>
-            {{  $tables ->appends(request() -> input()) ->render()}}
+            {{  $tables -> appends(request() -> input()) ->render()}}
         </div>
     </div>
 
@@ -103,6 +110,41 @@
             }
         });
     });
+
+    /*用户-删除*/
+    function member_del(obj,id){
+        layer.confirm('确认要删除吗？',{
+            btn:['确定','取消'],
+            btn1:function(index,layero){
+                $.ajaxSetup({
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                });
+                $.ajax({
+                    type:'POST',
+                    url:'{{url('home/delete_user')}}',
+                    data:{
+                        id:id
+                    },
+                    dataType:'json',
+                    success:function (response) {
+                        if (response.code == 200){
+                            layer.close(index);
+                            $(obj).parents("tr").remove();
+                            layer.msg('已删除!',{icon:6,time:500,end:function () {
+                                    location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
+                                }});
+                        } else{
+                            layer.msg('删除失败!',{icon:5,time:1000});
+                        }
+
+                    }
+                });
+
+            }
+        });
+    }
+
+
 </script>
 </body>
 
