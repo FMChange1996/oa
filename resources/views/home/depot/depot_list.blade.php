@@ -24,20 +24,18 @@
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="{{url('home/index')}}">首页</a>
-        <a href="javascript:">客户跟踪</a>
+        <a href="javascript:">仓库管理</a>
         <a>
-          <cite>跟踪列表</cite></a>
+          <cite>库存列表</cite></a>
       </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
-       href="javascript:location.replace(location.href = '{{url('home/track_list')}}');" title="刷新">
+       href="javascript:location.replace(location.href = '{{url('home/depot_list')}}');" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="x-body">
     <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" id="seach_member" name="seach_member" method="get" action="{{url('home/screen_track')}}">
             <input type="text" name="screen_time" id="screen_time" placeholder="选择需要筛选的日期" autocomplete="off"
-                   class="layui-input">
-            <input type="text" name="screen_name" id="screen_name" placeholder="请输入需要查找的旺旺ID" autocomplete="off"
                    class="layui-input">
             <button class="layui-btn" id="seach" ><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -52,12 +50,12 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>旺旺ID</th>
-            <th>第一次跟踪时间</th>
-            <th>第二次跟踪时间</th>
-            <th>第三次跟踪时间</th>
-            <th>创建时间</th>
-            <th>创建人</th>
+            <th>宽度</th>
+            <th>高度</th>
+            <th>加工方式</th>
+            <th>片数</th>
+            <th>登记人</th>
+            <th>登记时间</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -65,24 +63,12 @@
         @foreach($tables as $table)
         <tr>
             <td>{{$table -> id}}</td>
-            <td>{{$table -> wangwang}}</td>
-            @if($table -> first_time == null)
-            <td><a onclick="x_admin_show('第一次跟进','{{url('home/get_track/id='.$table -> id.'&key=first_time')}}',600,400)" >跟踪</a></td>
-            @else
-            <td>{{$table -> first_time}}</td>
-            @endif
-            @if($table -> second_time == null)
-            <td><a onclick="x_admin_show('第二次跟进','{{url('home/get_track/id='.$table -> id.'&key=second_time')}}',600,400)">跟踪</a></td>
-            @else
-            <td>{{$table -> second_time}}</td>
-            @endif
-            @if($table -> third_time == null)
-            <td><a onclick="x_admin_show('第三次跟进','{{url('home/get_track/id='.$table -> id.'&key=third_time')}}',600,400)">跟踪</a></td>
-            @else
-            <td>{{$table -> third_time}}</td>
-            @endif
-            <td>{{$table -> create_time}}</td>
-            <td>{{$table -> creator}}</td>
+            <td>{{$table -> width}}</td>
+            <td>{{$table -> height}}</td>
+            <td>{{$table -> working}}</td>
+            <td>{{$table -> number}}</td>
+            <td>{{$table -> username}}</td>
+            <td>{{$table -> time}}</td>
             <td class="td-manage">
                 <a title="删除" onclick="member_del(this,'{{$table -> id}}')" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
@@ -94,7 +80,7 @@
     </table>
     <div class="page">
         <div>
-            {{  $tables -> appends(request() -> input()) ->render()}}
+            {{  $tables ->appends(request() -> input()) ->render()}}
         </div>
     </div>
 
@@ -112,6 +98,8 @@
         });
     });
 
+
+
     /*用户-删除*/
     function member_del(obj,id){
         layer.confirm('确认要删除吗？',{
@@ -122,7 +110,7 @@
                 });
                 $.ajax({
                     type:'POST',
-                    url:'{{url('home/del_track')}}',
+                    url:'{{url('home/delete_user')}}',
                     data:{
                         id:id
                     },
@@ -132,7 +120,7 @@
                             layer.close(index);
                             $(obj).parents("tr").remove();
                             layer.msg('已删除!',{icon:6,time:500,end:function () {
-                                    location.href = "{{url('home/track_list')}}";
+                                    location.href = "{{url('home/admin_list/username='.Session::get('username'))}}";
                                 }});
                         } else{
                             layer.msg('删除失败!',{icon:5,time:1000});
@@ -144,8 +132,6 @@
             }
         });
     }
-
-
 </script>
 </body>
 
