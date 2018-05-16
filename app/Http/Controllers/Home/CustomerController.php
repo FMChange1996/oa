@@ -71,7 +71,7 @@ class CustomerController extends Controller
         if ($validate -> fails()){
             return response() -> json(['code' => 500 , 'message' => $validate -> errors() -> first()]);
         }else{
-            $insert = CustomerModel::insert([
+            $datas = [
                 'customer_id' => 'SH'.date('YmdHis') . rand(10000, 99999),
                 'name' => $data['name'],
                 'mobile' => $data['mobile'],
@@ -79,11 +79,12 @@ class CustomerController extends Controller
                 'context' => $data['context'],
                 'status' => 0,
                 'create_at' => time()
-            ]);
+            ];
+            $insert = CustomerModel::insert($datas);
             if ($insert == true){
                 SytemModel::insert([
                     'username' => session() -> get('username'),
-                    'context' => '添加售后订单，订单号：'.$insert['customer_id'],
+                    'context' => '添加售后订单，订单号：'.$datas['customer_id'],
                     'time' => time()
                 ]);
                 return response() -> json(['code' => 200 , 'message' => '添加成功']);
