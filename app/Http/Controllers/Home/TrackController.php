@@ -100,9 +100,7 @@ class TrackController extends Controller
     public function screen_track(Request $request)
     {
         $data = $request->all();
-        if (empty($data['screen_time'])  or empty($data['screen_name'])){
-//            $table = TrackModel::paginate(15);
-//            return view('home/track/track_list', ['title' => '客户跟踪', 'tables' => $table, 'count' => $table->count()]);
+        if (empty($data['screen_time'])  && empty($data['screen_name'])){
             return redirect('home/track_list');
         }
         if (!empty($data['screen_time'])){
