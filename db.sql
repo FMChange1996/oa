@@ -118,7 +118,25 @@ CREATE TABLE `logs` (
   `time` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
+-- Table structure for depot
+-- ----------------------------
+DROP TABLE IF EXISTS `depot`;
+CREATE TABLE `depot` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `width` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `height` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `working` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `number` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
