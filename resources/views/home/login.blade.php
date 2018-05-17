@@ -34,7 +34,31 @@
 
 
 <script>
-    //
+
+    //监听提交
+    $(document).keyup(function (event) {
+       if (event.keyCode == 13){
+           $.ajaxSetup({
+               headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
+           });
+           $.ajax({
+               type:'POST',
+               url:'{{url('home/check')}}',
+               data:$('#from').serialize(),
+               dataType:'json',
+               success:function (response) {
+                   if (response.status == 0){
+                       layer.msg(response.message,{icon:6,time:3000});
+                       window.location.href = "{{url('home/index')}}";
+                   } else {
+                       layer.msg(response.message,{icon:5,time:2000});
+                   }
+               }
+           });
+       }
+    });
+
+    //按钮提交
     $(function () {
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
