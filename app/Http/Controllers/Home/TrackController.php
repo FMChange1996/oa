@@ -114,6 +114,7 @@ class TrackController extends Controller
 
     }
 
+    //删除跟踪客户
     public function del_track(Request $request)
     {
         $data = $request->all();
@@ -130,5 +131,56 @@ class TrackController extends Controller
             return response()->json(['code' => 200]);
         }
 
+    }
+
+    //渲染备注模板
+    public function remark($id)
+    {
+        $find = TrackModel::find($id);
+        return view('home/track/remark',['title' => '添加备注','table' => $find]);
+    }
+
+    //添加备注
+    public function  add_remark(Request $request)
+    {
+        $data = $request -> all();
+        $message = [
+            'remark.required' => '不可提交空的备注'
+        ];
+        $validate = Validator::make($data,[
+            'id' => 'required',
+            'remark' => 'required'
+        ],$message);
+        if ($validate -> fails()) {
+            return response() -> json(['status' => 1 ,'message' => $validate -> errors() -> first()]);
+        }else{
+            $find = TrackModel::find($data['id']);
+            if (empty($find['remark'])){
+                $find -> remark = $data['remark'];
+                if ($find -> save()){
+                    SystemModel::insert([
+                        'username' => session()->get('username'),
+                        'context' => '添加备注，客户：' . $find['wangwang'],
+                        'time' => time()
+                    ]);
+                    return response() -> json(['status' => 0 , 'message' => '添加备注成功']);
+                }else{
+                    return response() -> json(['status' => 1 , 'message' => '添加备注失败']);
+                }
+            }else{
+                $find -> remark = $data['remark'];
+                if ($find -> save()){
+                    SystemModel::insert([
+                        'username' => session()->get('username'),
+                        'context' => '修改备注，客户：' . $find['wangwang'],
+                        'time' => time()
+                    ]);
+                    return response() -> json(['status' => 0 , 'message' => '修改备注成功']);
+                }else{
+                    return response() -> json(['status' => 1 , 'message' => '修改备注失败']);
+                }
+            }
+
+        }
     }
 }

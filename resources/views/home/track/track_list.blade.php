@@ -56,6 +56,7 @@
             <th>第一次跟踪时间</th>
             <th>第二次跟踪时间</th>
             <th>第三次跟踪时间</th>
+            <td>备注</td>
             <th>创建时间</th>
             <th>创建人</th>
             <th>操作</th>
@@ -80,6 +81,11 @@
             <td><a onclick="x_admin_show('第三次跟进','{{url('home/get_track/id='.$table -> id.'&key=third_time')}}',600,400)">跟踪</a></td>
             @else
             <td>{{$table -> third_time}}</td>
+            @endif
+            @if(empty($table -> remark))
+            <td><a onclick="x_admin_show('备注','{{url('home/remark/id='.$table -> id)}}',600,400)">备注</a></td>
+            @else
+            <td>{{$table -> remark}}&nbsp;&nbsp;&nbsp;<a onclick="x_admin_show('修改备注','{{url('home/remark/id='.$table -> id)}}',600,400)">修改</a></td>
             @endif
             <td>{{$table -> create_time}}</td>
             <td>{{$table -> creator}}</td>
