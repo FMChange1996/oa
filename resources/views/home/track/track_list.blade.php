@@ -51,7 +51,7 @@
     <table class="layui-table" id="demo" lay-filter="table1" lay-size="sm">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>序号</th>
             <th>旺旺ID</th>
             <th>第一次跟踪时间</th>
             <th>第二次跟踪时间</th>

@@ -78,6 +78,7 @@ Route::group(['namespace' => 'Home','middleware' => 'home'],function (){
     Route::post('home/update_track','TrackController@update_track');
     Route::get('home/get_track/id={id}&key={key}','TrackController@get_track');
     Route::post('home/add_track','TrackController@add_track');
+    Route::post('home/del_track','TrackController@del_track');
     Route::get('home/screen_track','TrackController@screen_track');
     Route::get('home/remark/id={id}','TrackController@remark');
     Route::post('home/remark/add_remark','TrackController@add_remark');
