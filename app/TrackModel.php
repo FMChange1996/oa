@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TrackModel extends Model
 {
+    use SoftDeletes;
     //绑定表
     protected $table = 'track';
 
