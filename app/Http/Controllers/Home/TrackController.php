@@ -120,7 +120,7 @@ class TrackController extends Controller
         $data = $request->all();
         $find = TrackModel::find($data['id']);
         $find -> delete();
-        if ($find->trashed()) {
+        if ($find -> trashed()) {
             SystemModel::insert([
                 'username' => session()->get('username'),
                 'context' => '删除跟踪客户：' . $find['wangwang'],
