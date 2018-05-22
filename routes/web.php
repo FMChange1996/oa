@@ -15,6 +15,10 @@ Route::get('/', function () {
     return redirect('home');
 });
 
+Route::group(['namespace' => 'Api'],function (){
+    Route::get('api/getvaptcha','ApiController@getVaptcha');
+});
+
 Route::group(['namespace' => 'Home'],function (){
     Route::get('home','HomeController@home');
     Route::post('home/check','HomeController@check');
