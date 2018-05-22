@@ -72,6 +72,9 @@
                     } else {
                         layer.msg(response.message,{icon:5,time:1000});
                     }
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus);
                 }
             });
         });
