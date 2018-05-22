@@ -54,15 +54,16 @@
         <hr class="hr15">
         <input name="password"  placeholder="密码"  type="password" class="layui-input" id="password" >
         <hr class="hr15">
-        <div id="vaptcha_container" style="width:300px;height:36px;">
-            <!--vaptcha_container是用来引入Vaptcha的容器，下面代码为预加载动画，仅供参考-->
-            <div class="vaptcha-init-main">
-                <div class="vaptcha-init-loading">
-                    <a href="/" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>
-                    <span class="vaptcha-text">Vaptcha启动中...</span>
-                </div>
-            </div>
-        </div>
+        {{--<div id="vaptcha_container" style="width:300px;height:36px;">--}}
+            {{--<!--vaptcha_container是用来引入Vaptcha的容器，下面代码为预加载动画，仅供参考-->--}}
+            {{--<div class="vaptcha-init-main">--}}
+                {{--<div class="vaptcha-init-loading">--}}
+                    {{--<a href="/" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>--}}
+                    {{--<span class="vaptcha-text">Vaptcha启动中...</span>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+        {!! Geetest::render('popup') !!}
         <hr class="hr15">
         <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="button" id="login">
         <hr class="hr20" >
@@ -126,53 +127,30 @@
       }
     };
 
-    var form = {
-        token: '',
-        challenge: '',
-        phone: '',
-        password: ''
-    }
-    $.get('{{url('api/getvaptcha')}}', function (r) {
-        r = r.data;
-        var options = {
-            vid: r.vid,//站点id ,string,必选,
-            challenge: r.challenge,//验证流水号 ,string,必选,
-            container: $('#vaptchaContainer'),//验证码容器,element,必选,
-            type: "embed",//验证码类型,string,默认float,可选择float,popup,embed,
-            https: false,//是否是https , boolean,默认true,(false:http),
-            color:"#57ABFF",//点击式按钮的背景颜色,string
-            outage: '/server/auth.php?action=getDownTime',
-            success: function (token, challenge) {//当验证成功时执行回调,function,参数token为string,必选,
-                //提交表单时将token，challenge一并提交，作为验证通过的凭证，服务端进行二次验证
-                form.token = token;
-                form.challenge = challenge;
+    $.get('api/getvaptcha?sceneid=01', function(response){
+        console.log(response);
+        var options={
+            vid: response.data.vid, //验证单元id, string, 必填
+            challenge: response.data.challenge, //验证流水号, string, 必填
+            container:"#vaptcha_container",//验证码容器, HTMLElement或者selector, 必填
+            type:"click", //必填，表示点击式验证模式,
+            effect:'float', //验证图显示方式, string, 可选择float, popup, 默认float
+            https:false, //协议类型, boolean, 可选true, false
+            color:"#57ABFF", //按钮颜色, string
+            outage:"/api/vaptcha/downtime", //服务器端配置的宕机模式接口地址
+            success:function(token,challenge){//验证成功回调函数, 参数token, challenge 为string, 必填
+                //todo:执行人机验证成功后的操作
             },
-            fail: function () {//验证失败时执行回调
-                //todo:执行人机验证失败后的事情
+            fail:function(){//验证失败回调函数
+                //todo:执行人机验证失败后的操作
             }
         }
-        //vaptcha对象
-        var vaptcha_obj;
-        window.vaptcha(options, function (obj) {
-            vaptcha_obj = obj;
-            //执行初始化
-            vaptcha_obj.init();
+        var obj;
+        window.vaptcha(options,function(vaptcha_obj){
+            obj = vaptcha_obj;
+            obj.init();
         });
-    }, 'json')
-
-    $('.login-btn').click(function(e){
-        e.preventDefault();
-
-        if (!form.token) {
-            alert('请进行人机验证');
-            return false;
-        }
-        form.phone = $('input[name=phone]').val();
-        form.password = $('input[name=password]').val();
-        $.post('/server/auth.php?action=login', form, function(data){
-            alert(data.msg)
-        });
-    })
+    });
 
 
 </script>
