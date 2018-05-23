@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Api'],function (){
 Route::group(['namespace' => 'Home'],function (){
     Route::get('home','HomeController@home');
     Route::post('home/check','HomeController@check');
+    Route::get('home/system/update','HomeController@update_system');
 
 });
 

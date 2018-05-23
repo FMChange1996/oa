@@ -91,7 +91,10 @@ class HomeController extends Controller
         return view('home/welcome');
     }
 
-
+    public function update_system(Request $request)
+    {
+        
+    }
 
 
 
