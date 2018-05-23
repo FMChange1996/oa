@@ -113,6 +113,10 @@
                                            } else {
                                                layer.msg(response.message,{icon:5,time:2000});
                                            }
+                                       },
+                                       error:function (jqXHR) {
+                                           var data = JSON.parse(jqXHR.responseText);
+                                           alert(data.message);
                                        }
                                    })
                                }
@@ -182,6 +186,10 @@
                                             } else {
                                                 layer.msg(response.message,{icon:5,time:2000});
                                             }
+                                        },
+                                        error:function (jqXHR) {
+                                            var data = JSON.parse(jqXHR.responseText);
+                                            alert(data.message);
                                         }
                                     })
                                 }
