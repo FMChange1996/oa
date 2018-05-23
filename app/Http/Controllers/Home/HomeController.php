@@ -93,7 +93,9 @@ class HomeController extends Controller
 
     public function update_system(Request $request)
     {
-        
+        $data = $request ->all();
+        var_dump($data);
+
     }
 
 
