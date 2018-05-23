@@ -31,7 +31,14 @@ class ApiController extends Controller
     }
 
     public function getDownTime(Request $request) {
-        $data = json_decode($this->vaptcha->downTime($request->data));
+        $data = $this->vaptcha->downTime($request->data);
         return response()->json($data);
+    }
+
+    public function getVaptcha(Request $request)
+    {
+        $data = $request -> all();
+        $response = $this -> vaptcha ->validate($data['challenge'],$data['token']);
+        return response() -> json(['status' => $response]);
     }
 }

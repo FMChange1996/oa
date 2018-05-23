@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::group(['namespace' => 'Api'],function (){
     Route::get('api/getvaptcha','ApiController@getChallenge');
+    Route::get('api/downtime','ApiController@getDownTime');
+    Route::post('api/vaptcha/validate','ApiController@getVaptcha');
 });
 
 Route::group(['namespace' => 'Home'],function (){

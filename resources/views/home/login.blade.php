@@ -16,8 +16,8 @@
     <style>
         .vaptcha-init-main {
             display: table;
-            width: 100%;
-            height: 100%
+            width: 120%;
+            height: 100%;
             background-color: #EEEEEE;
         }
         .vaptcha-init-loading {
@@ -54,44 +54,85 @@
         <hr class="hr15">
         <input name="password"  placeholder="密码"  type="password" class="layui-input" id="password" >
         <hr class="hr15">
-        {{--<div id="vaptcha_container" style="width:300px;height:36px;">--}}
-            {{--<!--vaptcha_container是用来引入Vaptcha的容器，下面代码为预加载动画，仅供参考-->--}}
-            {{--<div class="vaptcha-init-main">--}}
-                {{--<div class="vaptcha-init-loading">--}}
-                    {{--<a href="/" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>--}}
-                    {{--<span class="vaptcha-text">Vaptcha启动中...</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {!! Geetest::render('popup') !!}
-        <hr class="hr15">
-        <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="button" id="login">
+        <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="button" id="login" >
         <hr class="hr20" >
+        <div id="vaptcha_container"  >
+            <!--vaptcha_container是用来引入Vaptcha的容器，下面代码为预加载动画，仅供参考-->
+            <div class="vaptcha-init-main" id="vaptcha">
+                <div class="vaptcha-init-loading">
+                    <a href="/" target="_blank"><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>
+                    <span class="vaptcha-text">Vaptcha启动中...</span>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 
 <script src="https://cdn.vaptcha.com/v.js"></script>
 <script>
+    document.getElementById("vaptcha").style.visibility="hidden";
 
     //监听提交
     $(document).keyup(function (event) {
        if (event.keyCode == 13){
-           $.ajaxSetup({
-               headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
-           });
-           $.ajax({
-               type:'POST',
-               url:'{{url('home/check')}}',
-               data:$('#from').serialize(),
-               dataType:'json',
-               success:function (response) {
-                   if (response.status == 0){
-                       layer.msg(response.message,{icon:6,time:3000});
-                       window.location.href = "{{url('home/index')}}";
-                   } else {
-                       layer.msg(response.message,{icon:5,time:2000});
+           document.getElementById("vaptcha").style.visibility="visible";
+           $.get('api/getvaptcha', function(response){
+               console.log(response);
+               var options={
+                   vid: response.data.vid, //验证单元id, string, 必填
+                   challenge: response.data.challenge, //验证流水号, string, 必填
+                   container:"#vaptcha_container",//验证码容器, HTMLElement或者selector, 必填
+                   type:"popup", //必填，表示点击式验证模式,
+                   effect:'popup', //验证图显示方式, string, 可选择float, popup, 默认float
+                   // https:false, //协议类型, boolean, 可选true, false
+                   color:"#57ABFF", //按钮颜色, string
+                   outage:"{{url('api/downtime')}}", //服务器端配置的宕机模式接口地址
+                   success:function(token,challenge){//验证成功回调函数, 参数token, challenge 为string, 必填
+                       $.ajaxSetup({
+                           headers:{'X-CSRF-TOKEN':'{{csrf_token()}}'}
+                       });
+                       $.ajax({
+                           type:'POST',
+                           url:'{{url('api/vaptcha/validate')}}',
+                           data:{
+                               token:token,
+                               challenge:challenge
+                           },
+                           dataType:'json',
+                           success:function (response) {
+                               if (response.status == true){
+                                   $.ajax({
+                                       type:'POST',
+                                       url:'{{url('home/check')}}',
+                                       data:$('#from').serialize(),
+                                       dataType:'json',
+                                       success:function (response) {
+                                           if (response.status == 0){
+                                               layer.msg(response.message,{icon:6,time:3000});
+                                               window.location.href = "{{url('home/index')}}";
+                                           } else {
+                                               layer.msg(response.message,{icon:5,time:2000});
+                                           }
+                                       }
+                                   })
+                               }
+                           }
+                       })
+                   },
+                   fail:function(){//验证失败回调函数
+                       //todo:执行人机验证失败后的操作
+                       var obj;
+                       window.vaptcha(options,function(vaptcha_obj){
+                           obj = vaptcha_obj;
+                           obj.init();
+                       });
                    }
                }
+               var obj;
+               window.vaptcha(options,function(vaptcha_obj){
+                   obj = vaptcha_obj;
+                   obj.init();
+               });
            });
        }
     });
@@ -103,20 +144,65 @@
         });
         //提交信息
         $('#login').on('click',function (event) {
-            $.ajax({
-                type:'POST',
-                url:'{{url('home/check')}}',
-                data:$('#from').serialize(),
-                dataType:'json',
-                success:function (response) {
-                    if (response.status == 0){
-                        layer.msg(response.message,{icon:6,time:3000});
-                        window.location.href = "{{url('home/index')}}";
-                    } else {
-                        layer.msg(response.message,{icon:5,time:2000});
+            document.getElementById("vaptcha").style.visibility="visible";
+            $.get('api/getvaptcha', function(response){
+                console.log(response);
+                var options={
+                    vid: response.data.vid, //验证单元id, string, 必填
+                    challenge: response.data.challenge, //验证流水号, string, 必填
+                    container:"#vaptcha_container",//验证码容器, HTMLElement或者selector, 必填
+                    type:"popup", //必填，表示点击式验证模式,
+                    effect:'popup', //验证图显示方式, string, 可选择float, popup, 默认float
+                    // https:false, //协议类型, boolean, 可选true, false
+                    color:"#57ABFF", //按钮颜色, string
+                    outage:"{{url('api/downtime')}}", //服务器端配置的宕机模式接口地址
+                    success:function(token,challenge){//验证成功回调函数, 参数token, challenge 为string, 必填
+                        $.ajaxSetup({
+                            headers:{'X-CSRF-TOKEN':'{{csrf_token()}}'}
+                        });
+                        $.ajax({
+                            type:'POST',
+                            url:'{{url('api/vaptcha/validate')}}',
+                            data:{
+                                token:token,
+                                challenge:challenge
+                            },
+                            dataType:'json',
+                            success:function (response) {
+                                if (response.status == true){
+                                    $.ajax({
+                                        type:'POST',
+                                        url:'{{url('home/check')}}',
+                                        data:$('#from').serialize(),
+                                        dataType:'json',
+                                        success:function (response) {
+                                            if (response.status == 0){
+                                                layer.msg(response.message,{icon:6,time:3000});
+                                                window.location.href = "{{url('home/index')}}";
+                                            } else {
+                                                layer.msg(response.message,{icon:5,time:2000});
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    },
+                    fail:function(){//验证失败回调函数
+                        //todo:执行人机验证失败后的操作
+                        var obj;
+                        window.vaptcha(options,function(vaptcha_obj){
+                            obj = vaptcha_obj;
+                            obj.init();
+                        });
                     }
                 }
-            })
+                var obj;
+                window.vaptcha(options,function(vaptcha_obj){
+                    obj = vaptcha_obj;
+                    obj.init();
+                });
+            });
         })
     });
 
@@ -127,30 +213,7 @@
       }
     };
 
-    $.get('api/getvaptcha?sceneid=01', function(response){
-        console.log(response);
-        var options={
-            vid: response.data.vid, //验证单元id, string, 必填
-            challenge: response.data.challenge, //验证流水号, string, 必填
-            container:"#vaptcha_container",//验证码容器, HTMLElement或者selector, 必填
-            type:"click", //必填，表示点击式验证模式,
-            effect:'float', //验证图显示方式, string, 可选择float, popup, 默认float
-            https:false, //协议类型, boolean, 可选true, false
-            color:"#57ABFF", //按钮颜色, string
-            outage:"/api/vaptcha/downtime", //服务器端配置的宕机模式接口地址
-            success:function(token,challenge){//验证成功回调函数, 参数token, challenge 为string, 必填
-                //todo:执行人机验证成功后的操作
-            },
-            fail:function(){//验证失败回调函数
-                //todo:执行人机验证失败后的操作
-            }
-        }
-        var obj;
-        window.vaptcha(options,function(vaptcha_obj){
-            obj = vaptcha_obj;
-            obj.init();
-        });
-    });
+
 
 
 </script>
